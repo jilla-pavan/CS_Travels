@@ -1,30 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --maroon: #C8102E;
-  --charcoal: #06070F;
-  --white: #FFFFFF;
+  --maroon: #c8102e;
+  --charcoal: #06070f;
+  --white: #ffffff;
 }
 
-* { scroll-behavior: smooth; }
+* {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
   background: #050509;
-  color: #F8F8F9;
-  font-family: 'Poppins', sans-serif;
+  color: #f8f8f9;
+  font-family: "Poppins", sans-serif;
   overflow-x: hidden;
 }
 
 .maroon-border {
-  border: 1px solid rgba(200,16,46,0.22);
+  border: 1px solid rgba(200, 16, 46, 0.22);
 }
 
 .maroon-gradient {
-  background: linear-gradient(135deg, #C8102E, #A10D27, #FFFFFF);
+  background: linear-gradient(135deg, #c8102e, #a10d27, #ffffff);
   background-size: 300% 300%;
   animation: shimmer 4s linear infinite;
   -webkit-background-clip: text;
@@ -34,28 +36,113 @@ body {
 
 .ornament-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
 }
 
 .card-glow:hover {
-  box-shadow: 0 0 30px rgba(200,16,46,0.25), 0 8px 40px rgba(0,0,0,0.4);
+  box-shadow:
+    0 0 30px rgba(200, 16, 46, 0.25),
+    0 8px 40px rgba(0, 0, 0, 0.4);
   transform: translateY(-4px);
   transition: all 0.3s ease;
 }
 
 .hero-bg {
-  background: 
-    radial-gradient(ellipse at top left, rgba(200,16,46,0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(255,255,255,0.14) 0%, transparent 50%),
-    linear-gradient(180deg, #06070F 0%, #06070F 100%);
+  background:
+    radial-gradient(
+      ellipse at top left,
+      rgba(200, 16, 46, 0.25) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(255, 255, 255, 0.14) 0%,
+      transparent 50%
+    ),
+    linear-gradient(180deg, #06070f 0%, #06070f 100%);
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #06070F; }
-::-webkit-scrollbar-thumb { background: #C8102E; border-radius: 3px; }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06070f;
+}
+::-webkit-scrollbar-thumb {
+  background: #c8102e;
+  border-radius: 3px;
+}
 
 @keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.packageSwiper {
+  overflow: visible;
+}
+
+.packageSwiper .swiper-slide {
+  height: auto;
+}
+
+.packageSwiper .swiper-button-prev,
+.packageSwiper .swiper-button-next {
+  width: 54px;
+  height: 54px;
+  border-radius: 9999px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.packageSwiper .swiper-button-prev:hover,
+.packageSwiper .swiper-button-next:hover {
+  background: rgba(212, 175, 55, 0.15);
+  transform: scale(1.08);
+}
+
+.packageSwiper .swiper-button-prev::after,
+.packageSwiper .swiper-button-next::after {
+  font-size: 16px;
+  font-weight: 700;
+  color: #d4af37;
+}
+
+.packageSwiper .swiper-pagination {
+  bottom: 0 !important;
+}
+
+.packageSwiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  opacity: 1;
+}
+
+.packageSwiper .swiper-pagination-bullet-active {
+  width: 28px;
+  border-radius: 9999px;
+  background: #d4af37;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .packageSwiper .swiper-button-prev,
+  .packageSwiper .swiper-button-next {
+    display: none;
+  }
 }

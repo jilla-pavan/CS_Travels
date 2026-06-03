@@ -70,7 +70,7 @@ export default function Navbar() {
                 CS TRAVELS
               </h2>
 
-              <p className="mt-0.5 text-[8px] uppercase tracking-[0.38em] text-[#D4AF37]/80">
+              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.38em] text-[#D4AF37]/80">
                 TIRUPATI
               </p>
             </div>

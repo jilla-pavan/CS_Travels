@@ -42,7 +42,7 @@ export default function Hero() {
       {/* Decorative Top Glow */}
       <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[#D4AF37]/10 blur-[180px]" />
       {/* Content */}
-      <div className="relative z-10 flex min-h-screen w-full items-center px-4 py-20 lg:px-6">
+      <div className="relative z-10 flex min-h-screen w-full items-center px-4 py-16 lg:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ export default function Hero() {
         >
           {/* Badge */}
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-6">
             <div className="inline-flex items-center rounded-full border border-[#D4AF37]/15 bg-white/[0.02] px-5 py-2.5 backdrop-blur-md">
               <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
                 Trusted Pilgrimage Travel Partner

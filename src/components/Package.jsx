@@ -10,6 +10,12 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { tourPackages } from "../data/tourPackages";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 function AnimatedSection({ children, delay = 0 }) {
   const ref = useRef(null);
@@ -90,7 +96,7 @@ export default function Package() {
   return (
     <section
       id="package"
-      className="relative overflow-hidden bg-black py-24 text-white"
+      className="relative overflow-hidden bg-black py-16 text-white"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-black to-[#050505]" />
@@ -120,160 +126,168 @@ export default function Package() {
         </AnimatedSection>
 
         {/* Package Cards */}
+        {/* Package Cards */}
         <AnimatedSection delay={0.1}>
-          <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {tourPackages.map((pkg) => (
-              <div
-                key={pkg.title}
-                className="
-    group
-    relative
-    flex
-    h-full
-    flex-col
-    overflow-hidden
-    rounded-[36px]
-    border
-    border-white/10
-    bg-[#08080F]
-    transition-all
-    duration-500
-    hover:-translate-y-2
-    hover:border-[#D4AF37]/30
-    hover:shadow-[0_25px_80px_rgba(212,175,55,0.08)]
-  "
-              >
-                {/* Image */}
-                <div className="relative h-[260px] overflow-hidden">
-                  <img
-                    src={pkg.image}
-                    alt={pkg.title}
+          <div className="mt-16 relative">
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={24}
+              navigation
+              pagination={{
+                clickable: true,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1.1,
+                },
+                640: {
+                  slidesPerView: 1.3,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1280: {
+                  slidesPerView: 3,
+                },
+              }}
+              className="packageSwiper !pb-16"
+            >
+              {tourPackages.map((pkg) => (
+                <SwiperSlide key={pkg.title} className="h-auto">
+                  <div
                     className="
-        h-full
-        w-full
-        object-cover
-        transition-transform
-        duration-700
-        group-hover:scale-110
-      "
-                  />
-
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-
-                  {/* Tag */}
-                  <div className="absolute left-5 top-5">
-                    <span
-                      className="
-          rounded-full
-          bg-[#D4AF37]
-          px-4
-          py-2
-          text-[10px]
-          font-bold
-          uppercase
-          tracking-[0.2em]
-          text-black
-        "
-                    >
-                      {pkg.tag}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-1 flex-col p-7">
-                  {/* Duration */}
-                  <p
-                    className="
-        text-[11px]
-        font-semibold
-        uppercase
-        tracking-[0.35em]
-        text-[#D4AF37]
-      "
-                  >
-                    {pkg.subtitle}
-                  </p>
-
-                  {/* Title */}
-                  <h3
-                    className="
-        mt-3
-        min-h-[72px]
-        text-2xl
-        font-bold
-        leading-tight
-        text-white
-      "
-                  >
-                    {pkg.title}
-                  </h3>
-
-                  {/* Small Description */}
-                  <p
-                    className="
-        mt-4
-        line-clamp-2
-        text-sm
-        leading-7
-        text-white/60
-      "
-                  >
-                    {pkg.description}
-                  </p>
-
-                  {/* Bottom Section */}
-                  <div className="mt-auto pt-8">
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <p
-                          className="
-              text-[10px]
-              uppercase
-              tracking-[0.25em]
-              text-white/40
+              group
+              relative
+              flex
+              h-full
+              flex-col
+              overflow-hidden
+              rounded-[36px]
+              border
+              border-white/10
+              bg-[#08080F]
+              transition-all
+              duration-500
+              hover:-translate-y-2
+              hover:border-[#D4AF37]/30
+              hover:shadow-[0_25px_80px_rgba(212,175,55,0.08)]
             "
-                        >
-                          Starting From
-                        </p>
-
-                        <p className="mt-2 text-3xl font-bold text-white">
-                          {pkg.price}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          window.location.hash = `#/details/${pkg.slug}`;
-
-                          window.scrollTo({
-                            top: 0,
-                            behavior: "smooth",
-                          });
-                        }}
+                  >
+                    {/* Image */}
+                    <div className="relative h-[260px] overflow-hidden">
+                      <img
+                        src={pkg.image}
+                        alt={pkg.title}
                         className="
-            flex
-            h-12
-            w-12
-            items-center
-            justify-center
-            rounded-full
-            bg-[#D4AF37]
-            text-black
-            transition-all
-            duration-300
-            group-hover:rotate-45
-            group-hover:scale-110
-          "
+                  h-full
+                  w-full
+                  object-cover
+                  transition-transform
+                  duration-700
+                  group-hover:scale-110
+                "
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+                      <div className="absolute left-5 top-5">
+                        <span
+                          className="
+                    rounded-full
+                    bg-[#D4AF37]
+                    px-4
+                    py-2
+                    text-[10px]
+                    font-bold
+                    uppercase
+                    tracking-[0.2em]
+                    text-black
+                  "
+                        >
+                          {pkg.tag}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex flex-1 flex-col p-7">
+                      <p
+                        className="
+                  text-[11px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.35em]
+                  text-[#D4AF37]
+                "
                       >
-                        <ArrowRight size={18} />
-                      </button>
+                        {pkg.subtitle}
+                      </p>
+
+                      <h3
+                        className="
+                  mt-3
+                  min-h-[72px]
+                  text-2xl
+                  font-bold
+                  leading-tight
+                  text-white
+                "
+                      >
+                        {pkg.title}
+                      </h3>
+
+                      <div className="mt-auto pt-8">
+                        <div className="flex items-end justify-between">
+                          <div>
+                            <p
+                              className="
+                        text-[10px]
+                        uppercase
+                        tracking-[0.25em]
+                        text-white/40
+                      "
+                            >
+                              Starting From
+                            </p>
+
+                            <p className="mt-2 text-3xl font-bold text-white">
+                              {pkg.price}
+                            </p>
+                          </div>
+
+                          <button
+                            onClick={() => {
+                              window.location.hash = `#/details/${pkg.slug}`;
+
+                              window.scrollTo({
+                                top: 0,
+                                behavior: "smooth",
+                              });
+                            }}
+                            className="
+                      flex
+                      h-12
+                      w-12
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-[#D4AF37]
+                      text-black
+                      transition-all
+                      duration-300
+                      group-hover:rotate-45
+                      group-hover:scale-110
+                    "
+                          >
+                            <ArrowRight size={18} />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </AnimatedSection>
       </div>
