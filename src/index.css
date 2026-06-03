@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --maroon: #C8102E;
+  --charcoal: #06070F;
+  --white: #FFFFFF;
+}
+
+* { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #050509;
+  color: #F8F8F9;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.maroon-border {
+  border: 1px solid rgba(200,16,46,0.22);
+}
+
+.maroon-gradient {
+  background: linear-gradient(135deg, #C8102E, #A10D27, #FFFFFF);
+  background-size: 300% 300%;
+  animation: shimmer 4s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ornament-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 30px rgba(200,16,46,0.25), 0 8px 40px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}
+
+.hero-bg {
+  background: 
+    radial-gradient(ellipse at top left, rgba(200,16,46,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(255,255,255,0.14) 0%, transparent 50%),
+    linear-gradient(180deg, #06070F 0%, #06070F 100%);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #06070F; }
+::-webkit-scrollbar-thumb { background: #C8102E; border-radius: 3px; }
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
