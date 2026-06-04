@@ -9,6 +9,7 @@ import Contact from "./components/Contact";
 import { Dessert } from "lucide-react";
 import Destinations from "./components/Destinations";
 import About from "./components/About";
+import Reviews from "./components/Reviews";
 
 function parseHashRoute() {
   const hash = window.location.hash.toLowerCase();
@@ -33,7 +34,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#08080F] text-white">
+    <div className="min-h-screen bg-black text-white">
       <Navbar />
       {route.page === "details" ? (
         <PackageDetails />
@@ -42,6 +43,7 @@ export default function App() {
           <Hero />
           <Package />
           <Destinations />
+          <Reviews />
           <About />
           <Contact />
         </>

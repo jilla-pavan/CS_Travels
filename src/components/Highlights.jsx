@@ -51,27 +51,27 @@ const reasons = [
 
 export default function Highlights() {
   return (
-    <section id="highlights" className="py-24 bg-[#F8F8F8]">
+    <section id="highlights" className="py-24 bg-[#050505]">
       <div className="max-w-7xl mx-auto px-6">
         <AnimatedSection>
           <div className="text-center mb-14">
-            <p className="text-crimson text-xs tracking-[0.4em] mb-3 uppercase font-semibold">Why this tour</p>
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
-              Tour <span className="text-crimson">Highlights</span>
+            <p className="text-[#D4AF37] text-xs tracking-[0.4em] mb-3 uppercase font-semibold">Why this tour</p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+              Tour <span className="text-[#D4AF37]">Highlights</span>
             </h2>
-            <div className="mx-auto h-px w-32 bg-slate-200" />
+            <div className="mx-auto h-px w-32 bg-white/10" />
           </div>
         </AnimatedSection>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-24">
           {highlights.map(({ icon, title, desc }, i) => (
             <AnimatedSection key={title} delay={i * 0.1}>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 rounded-xl mb-5 flex items-center justify-center bg-crimson/10 text-crimson">
+              <div className="rounded-3xl border border-white/10 bg-[#0A0A12] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 rounded-xl mb-5 flex items-center justify-center bg-[#D4AF37]/10 text-[#D4AF37]">
                   {icon}
                 </div>
-                <h3 className="text-slate-900 font-semibold text-sm mb-2 leading-snug">{title}</h3>
-                <p className="text-slate-600 text-xs leading-relaxed">{desc}</p>
+                <h3 className="text-white font-semibold text-sm mb-2 leading-snug">{title}</h3>
+                <p className="text-white/70 text-xs leading-relaxed">{desc}</p>
               </div>
             </AnimatedSection>
           ))}
@@ -80,12 +80,12 @@ export default function Highlights() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <AnimatedSection delay={0.1}>
             <div>
-              <p className="text-crimson text-xs tracking-[0.4em] mb-3 uppercase font-semibold">Our promise</p>
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">
-                Why Choose <br /> <span className="text-crimson">CS Travels?</span>
+              <p className="text-[#D4AF37] text-xs tracking-[0.4em] mb-3 uppercase font-semibold">Our promise</p>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                Why Choose <br /> <span className="text-[#D4AF37]">CS Travels?</span>
               </h2>
-              <div className="h-px w-32 bg-slate-200 mb-8" />
-              <p className="text-slate-600 leading-relaxed mb-8">
+              <div className="h-px w-32 bg-white/10 mb-8" />
+              <p className="text-white/70 leading-relaxed mb-8">
                 With years of experience navigating South India's most sacred temple routes, CS Travels Tirupati offers more than just transportation — we offer a truly premium pilgrimage experience.
               </p>
 
@@ -99,10 +99,10 @@ export default function Highlights() {
                     transition={{ delay: i * 0.08 }}
                     className="flex items-center gap-4"
                   >
-                    <div className="w-9 h-9 rounded-xl bg-crimson/10 flex items-center justify-center text-crimson">
+                    <div className="w-9 h-9 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37]">
                       {icon}
                     </div>
-                    <span className="text-slate-700">{text}</span>
+                    <span className="text-white/70">{text}</span>
                   </motion.div>
                 ))}
               </div>
@@ -110,8 +110,8 @@ export default function Highlights() {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-              <p className="text-crimson text-sm uppercase tracking-[0.28em] mb-6">Safe Journey · Happy Journey</p>
+            <div className="rounded-3xl border border-white/10 bg-[#0A0A12] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)]">
+              <p className="text-[#D4AF37] text-sm uppercase tracking-[0.28em] mb-6">Safe Journey · Happy Journey</p>
               <div className="grid grid-cols-3 gap-3 mb-8">
                 {["🕉️", "🌸", "✨", "🐒", "🌟", "🔱", "💫", "🪷", "🌿"].map((emoji, i) => (
                   <motion.div
@@ -120,18 +120,18 @@ export default function Highlights() {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05, type: "spring" }}
-                    className="aspect-square rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-center text-2xl"
+                    className="aspect-square rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center text-2xl"
                   >
                     {emoji}
                   </motion.div>
                 ))}
               </div>
               <div className="text-center">
-                <p className="text-slate-500 text-xs mb-2 tracking-[0.2em] uppercase">Total temples covered</p>
-                <p className="text-5xl font-bold text-slate-900">9</p>
+                <p className="text-white/50 text-xs mb-2 tracking-[0.2em] uppercase">Total temples covered</p>
+                <p className="text-5xl font-bold text-white">9</p>
               </div>
-              <div className="h-px bg-slate-200 my-6" />
-              <p className="text-center text-slate-500 text-xs">Pickup & drop from Tirupati</p>
+              <div className="h-px bg-white/10 my-6" />
+              <p className="text-center text-white/50 text-xs">Pickup & drop from Tirupati</p>
             </div>
           </AnimatedSection>
         </div>

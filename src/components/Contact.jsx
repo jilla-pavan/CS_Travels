@@ -1,12 +1,13 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Phone, MessageCircle, MapPin, AlertTriangle, Car } from "lucide-react";
+import { Phone, MessageCircle, MapPin, ShieldCheck } from "lucide-react";
 import logo from "../assets/CS_Travels_Gold_Logo.png";
+import GoldTempleBG from "../assets/gold-temple-1.jpg";
 
 function AnimatedSection({ children, delay = 0 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+
   return (
     <motion.div
       ref={ref}
@@ -19,234 +20,180 @@ function AnimatedSection({ children, delay = 0 }) {
   );
 }
 
-const notes = [
-  "Driver food ₹300/- per day is extra",
-  "Early start required for temple timings",
-  "Darshan depends on temple opening timings",
-  "Vehicle allowed till parking areas only",
-];
-
 export default function Contact() {
   return (
     <>
+      {/* CONTACT SECTION */}
       <section
         id="contact"
-        className="relative overflow-hidden bg-black py-24 text-white"
+        className="relative overflow-hidden bg-black py-16 text-white"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-black to-[#050505]" />
-
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.08),_transparent_45%)]" />
+        <div className="absolute inset-0 bg-black" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+          {/* HEADING */}
           <AnimatedSection>
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[#D4AF37]">
                 START YOUR JOURNEY
               </p>
 
-              <h2 className="mt-4 text-4xl font-bold sm:text-5xl lg:text-6xl">
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
                 Travel Beyond
                 <span className="block text-[#D4AF37]">The Destination</span>
               </h2>
 
-              <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/60">
-                Premium pilgrimage tours, airport transfers, private
-                transportation and customized travel experiences designed around
-                comfort, reliability and peace of mind.
+              <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-white/60">
+                Premium pilgrimage tours, private transport, and customized
+                travel experiences designed for comfort, trust, and seamless
+                journeys.
               </p>
             </div>
           </AnimatedSection>
 
-          <div className="mt-20">
-            {/* Contact Cards */}
-
-            <AnimatedSection delay={0.1}>
-              <div className="grid gap-6 md:grid-cols-3 w-full">
-                {/* Call */}
-                <a
-                  href="tel:9347472307"
-                  className="
-        group
-        flex
-        items-center
-        gap-5
-        rounded-[28px]
-        border
-        border-white/10
-        bg-[#0A0A12]
-        p-6
-        transition-all
-        duration-500
-        hover:-translate-y-1
-        hover:border-[#D4AF37]/30
-        hover:bg-white/[0.02]
-      "
-                >
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37]">
-                    <Phone size={22} />
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.35em] text-white/40">
-                      Call Us
-                    </p>
-
-                    <p className="mt-1 text-xl font-bold text-white">
-                      9347472307
-                    </p>
-
-                    <p className="text-sm text-white/50">Available Daily</p>
-                  </div>
-                </a>
-
-                {/* WhatsApp */}
-                <a
-                  href="https://wa.me/919347472307"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-        group
-        flex
-        items-center
-        gap-5
-        rounded-[28px]
-        border
-        border-white/10
-        bg-[#0A0A12]
-        p-6
-        transition-all
-        duration-500
-        hover:-translate-y-1
-        hover:border-[#D4AF37]/30
-        hover:bg-white/[0.02]
-      "
-                >
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37]">
-                    <MessageCircle size={22} />
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.35em] text-white/40">
-                      WhatsApp
-                    </p>
-
-                    <p className="mt-1 text-xl font-bold text-white">
-                      Quick Booking
-                    </p>
-
-                    <p className="text-sm text-white/50">Instant Support</p>
-                  </div>
-                </a>
-
-                {/* Location */}
-                <div
-                  className="
-        flex
-        items-center
-        gap-5
-        rounded-[28px]
-        border
-        border-white/10
-        bg-[#0A0A12]
-        p-6
-      "
-                >
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37]">
-                    <MapPin size={22} />
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.35em] text-white/40">
-                      Location
-                    </p>
-
-                    <p className="mt-1 text-xl font-bold text-white">
-                      Tirupati
-                    </p>
-
-                    <p className="text-sm text-white/50">Andhra Pradesh</p>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      <footer className="relative overflow-hidden border-t border-white/10 bg-black">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.06),_transparent_60%)]" />
-
-        <div className="relative mx-auto max-w-7xl px-6 py-12 lg:px-8">
-          <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
-            {/* Brand */}
-            <div>
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/10">
-                  <img src={logo} className="h-full w-full object-cover" alt="CS Travels Logo" />{" "}
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-bold tracking-[0.2em] text-white">
-                    CS TRAVELS
-                  </h3>
-
-                  <p className="mt-1 text-sm text-white/50">
-                    Premium Temple Tours & Travel Services
-                  </p>
-                </div>
-              </div>
-
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-white/50">
-                Trusted travel partner for Tirupati temple tours, airport
-                transfers, railway station pickups, sightseeing trips and
-                customized pilgrimage journeys.
-              </p>
-            </div>
-
-            {/* Contact */}
-            <div className="flex flex-col gap-4 text-right">
+          {/* CONTACT CARDS */}
+          <AnimatedSection delay={0.1}>
+            <div className="mt-20 grid gap-6 md:grid-cols-3">
+              {/* CALL */}
               <a
                 href="tel:9347472307"
-                className="text-white/70 transition hover:text-[#D4AF37]"
+                className="
+    group flex items-center justify-between
+    rounded-2xl border border-white/10
+    bg-white/5 p-6 backdrop-blur-md
+    transition-all duration-500
+    hover:-translate-y-2 hover:border-[#D4AF37]/40
+    hover:shadow-[0_20px_60px_rgba(212,175,55,0.08)]
+  "
               >
-                📞 +91 93474 72307
-              </a>
+                {/* LEFT SIDE */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#D4AF37] text-black">
+                    <Phone size={18} />
+                  </div>
 
-              <a
-                href="tel:9502042307"
-                className="text-white/70 transition hover:text-[#D4AF37]"
-              >
-                📞 +91 95020 42307
-              </a>
+                  <span className="text-sm font-semibold text-white/70 uppercase tracking-[0.15em]">
+                    Call
+                  </span>
+                </div>
 
+                {/* RIGHT SIDE (NUMBER) */}
+                <span className="text-lg font-bold text-white">9347472307</span>
+              </a>
+              {/* WHATSAPP */}
               <a
                 href="https://wa.me/919347472307"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/70 transition hover:text-[#D4AF37]"
+                className="
+    group flex items-center justify-between
+    rounded-2xl border border-white/10
+    bg-white/5 p-6 backdrop-blur-md
+    transition-all duration-500
+    hover:-translate-y-2 hover:border-[#D4AF37]/40
+    hover:shadow-[0_20px_60px_rgba(212,175,55,0.08)]
+  "
               >
-                💬 WhatsApp Booking
-              </a>
-            </div>
-          </div>
+                {/* LEFT SIDE */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#D4AF37] text-black">
+                    <MessageCircle size={18} />
+                  </div>
 
-          {/* Bottom */}
-          <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/40">
+                  <span className="text-sm font-semibold text-white/70 uppercase tracking-[0.15em]">
+                    WhatsApp
+                  </span>
+                </div>
+
+                {/* RIGHT SIDE */}
+                <span className="text-sm font-bold text-white">Chat Now</span>
+              </a>
+
+              <div
+                className="
+    flex items-center justify-between
+    rounded-2xl border border-white/10
+    bg-white/5 p-6 backdrop-blur-md
+  "
+              >
+                {/* LEFT SIDE */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#D4AF37] text-black">
+                    <MapPin size={18} />
+                  </div>
+
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/40">
+                      Location
+                    </p>
+
+                    <p className="text-sm font-semibold text-white/70">
+                      Tirupati
+                    </p>
+                  </div>
+                </div>
+
+                {/* RIGHT SIDE */}
+                <span className="text-xs uppercase tracking-[0.25em] text-white/40">
+                  Andhra Pradesh
+                </span>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]" />
+      </section>
+
+      {/* FOOTER */}
+      <footer className="relative overflow-hidden bg-black">
+        {/* BACKGROUND IMAGE */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${GoldTempleBG})`,
+          }}
+        />
+
+        {/* DARK OVERLAY */}
+        <div className="absolute inset-0 bg-black/90" />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-6 py-12">
+          {/* BRAND CENTER */}
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-16 w-16 overflow-hidden rounded-xl border border-[#D4AF37]">
+                <img
+                  src={logo}
+                  alt="CS Travels"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+
+              <h3 className="text-xl font-bold tracking-[0.3em]">CS TRAVELS</h3>
+            </div>
+
+            <p className="mx-auto mt-5 max-w-2xl text-sm text-white/50 leading-relaxed">
+              Premium Temple Tours & Travel Services for Tirupati pilgrimages,
+              airport transfers, and customized journeys with comfort and trust.
+            </p>
+          </div>
+          {/* BOTTOM BAR */}
+          <div className="flex mt-10 justify-center gap-4 text-xs text-white/40">
             <p>
               © {new Date().getFullYear()} CS Travels Tirupati. All Rights
               Reserved.
             </p>
-            <span className="text-xs text-white/20">
+
+            <p>
               Designed by{" "}
               <a
                 href="https://www.linkedin.com/in/jilla-pavan"
                 target="_blank"
-                className="hover:text-[#D4AF37] text-white"
-                rel="noopener noreferrer"
+                className="text-white hover:text-[#D4AF37]"
               >
                 Jilla Pavan
               </a>
-            </span>
+            </p>
           </div>
         </div>
       </footer>

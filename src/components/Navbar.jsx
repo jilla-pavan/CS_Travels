@@ -11,6 +11,7 @@ export default function Navbar() {
     { name: "Home", href: "#home" },
     { name: "Packages", href: "#package" },
     { name: "Destinations", href: "#destinations" },
+    { name: "Reviews", href: "#reviews" },
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
   ];
@@ -49,10 +50,10 @@ export default function Navbar() {
         }`}
       >
         {/* Premium Gold Glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.08),_transparent_60%)]" />
+        <div className="absolute inset-0 bg-black" />
 
         {/* Bottom Border */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]" />
 
         <div className="relative mx-auto flex h-[64px] max-w-7xl items-center justify-between px-6 lg:px-10">
           {/* Logo */}
@@ -61,8 +62,12 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="flex cursor-pointer items-center gap-2.5"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-white/95 shadow-[0_0_14px_rgba(212,175,55,0.22)] overflow-hidden">
-              <img src={logo} alt="CS Travels" className="h-9 w-9 object-cover" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#D4AF37] bg-white overflow-hidden">
+              <img
+                src={logo}
+                alt="CS Travels"
+                className="h-9 w-9 object-cover"
+              />
             </div>
 
             <div>
@@ -93,6 +98,7 @@ export default function Navbar() {
           </div>
 
           {/* CTA */}
+
           <motion.a
             href="tel:9347472307"
             whileHover={{ y: -2 }}
