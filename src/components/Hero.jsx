@@ -6,21 +6,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-[#7B0A17] text-white"
+      className="relative min-h-screen overflow-hidden bg-black text-white"
     >
       {/* Premium Black Background */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(255,255,255,.15) 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-      <div className="absolute inset-0 bg-[#050505]" />
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0A0A0A] to-[#121212]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(212,175,55,0.12),_transparent_35%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_rgba(212,175,55,0.08),_transparent_30%)]" />{" "}
+      <div className="absolute inset-0 bg-black" />{" "}
       {/* Govinda Namam Watermark */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
         <img
@@ -38,9 +27,7 @@ export default function Hero() {
         />
       </div>
       {/* Extra Golden Glow Behind Namam */}
-      <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#D4AF37]/10 blur-[140px]" />
       {/* Decorative Top Glow */}
-      <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[#D4AF37]/10 blur-[180px]" />
       {/* Content */}
       <div className="relative z-10 flex min-h-screen w-full items-center px-4 py-16 lg:px-6">
         <motion.div
@@ -52,8 +39,8 @@ export default function Hero() {
           {/* Badge */}
 
           <div className="flex justify-center mt-6">
-            <div className="inline-flex items-center rounded-full border border-[#D4AF37]/15 bg-white/[0.02] px-5 py-2.5 backdrop-blur-md">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
+            <div className="inline-flex items-center rounded-full border border-[#D4AF37] bg-white/10 px-5 py-2.5">
+              <span className="text-[12px] font-semibold uppercase tracking-[0.35em] text-white">
                 Trusted Pilgrimage Travel Partner
               </span>
             </div>
@@ -86,14 +73,7 @@ export default function Hero() {
           >
             Travel With{" "}
             <span
-              className="
-      bg-gradient-to-r
-      from-[#D4AF37]
-      via-[#F6D776]
-      to-[#D4AF37]
-      bg-clip-text
-      text-transparent
-    "
+              className="text-[#D4AF37]"
             >
               Devotion & Comfort
             </span>
@@ -233,7 +213,7 @@ hover:bg-white/[0.04]
         </motion.div>
       </div>
       {/* Bottom Divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]" />
     </section>
   );
 }
