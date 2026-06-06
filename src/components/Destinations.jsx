@@ -1,8 +1,10 @@
 import { MapPin, ArrowRight, ArrowLeft } from "lucide-react";
 import { destinations } from "../data/tourPackages";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import { useRef } from "react";
+import BGImage from "../assets/Packages_Background.png";
+
+import "swiper/css";
 
 export default function Destinations() {
   const swiperRef = useRef(null);
@@ -12,118 +14,203 @@ export default function Destinations() {
       id="destinations"
       className="relative overflow-hidden bg-black py-16 text-white"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Heading (same style, slight variation) */}
+      {/* Background */}
+      <div className="absolute inset-0 bg-black" />
+
+      {/*image */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img
+          src={BGImage}
+          alt=""
+          className="
+                h-full
+                 object-cover
+                  opacity-[0.1]
+                  select-none
+                "
+        />
+      </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[#D4AF37]">
-            POPULAR ROUTES
+          <p className="text-[11px] uppercase tracking-[0.45em] text-[#D4AF37]">
+            POPULAR DESTINATIONS
           </p>
 
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Destinations From <span className="text-[#D4AF37]">Tirupati</span>
+          <h2 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+            Travel Beyond{" "}
+            <span className="text-[#D4AF37] italic">Tirupati</span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/60">
-            Comfortable private travel to temples, airports, railway stations,
-            and sacred destinations across South India.
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60">
+            Comfortable private travel to sacred temples, airports, railway
+            stations and spiritual destinations across South India.
           </p>
         </div>
 
-        {/* CAROUSEL */}
-        <div className="mt-16 relative">
-          {/* LEFT NAV */}
+        {/* Navigation */}
+        <div className="mt-8 flex justify-center gap-3">
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             className="
-              absolute -left-8 top-1/2 z-20 -translate-y-1/2
-              flex h-12 w-12 items-center justify-center
-              rounded-full border border-white/10
-              bg-black/70 backdrop-blur-md text-white
-              transition hover:bg-white/10
+              flex
+              h-12
+              w-12
+              items-center
+              justify-center
+              border
+              border-white/10
+              bg-white/[0.02]
+              transition-all
+              duration-300
+              hover:border-[#D4AF37]/40
+              hover:text-[#D4AF37]
             "
           >
             <ArrowLeft size={18} />
           </button>
 
-          {/* RIGHT NAV */}
           <button
             onClick={() => swiperRef.current?.slideNext()}
             className="
-              absolute -right-8 top-1/2 z-20 -translate-y-1/2
-              flex h-12 w-12 items-center justify-center
-              rounded-full border border-white/10
-              bg-black/70 backdrop-blur-md text-white
-              transition hover:bg-white/10
+              flex
+              h-12
+              w-12
+              items-center
+              justify-center
+              border
+              border-white/10
+              bg-white/[0.02]
+              transition-all
+              duration-300
+              hover:border-[#D4AF37]/40
+              hover:text-[#D4AF37]
             "
           >
             <ArrowRight size={18} />
           </button>
+        </div>
 
+        {/* Slider */}
+        <div className="mt-10">
           <Swiper
             onSwiper={(swiper) => (swiperRef.current = swiper)}
-            spaceBetween={24}
+            spaceBetween={28}
             breakpoints={{
-              0: { slidesPerView: 1.1 },
-              640: { slidesPerView: 1.3 },
-              768: { slidesPerView: 2 },
-              1280: { slidesPerView: 3 },
+              0: {
+                slidesPerView: 1.1,
+              },
+              640: {
+                slidesPerView: 1.3,
+              },
+              1024: {
+                slidesPerView: 2,
+              },
+              1280: {
+                slidesPerView: 3,
+              },
             }}
           >
             {destinations.map((destination) => (
-              <SwiperSlide key={destination.name} className="h-auto">
+              <SwiperSlide key={destination.name}>
                 <div
                   className="
-                    group relative overflow-hidden
-                    rounded-2xl border border-white/10 bg-black
-                    transition-all duration-500
-                    hover:-translate-y-1 hover:border-[#D4AF37]/30
-                    hover:shadow-[0_18px_60px_rgba(255,255,255,0.06)]
+                    group
+                    overflow-hidden
+                    rounded-[px]
+                    border
+                    border-white/10
+                    bg-[#080808]
+                    transition-all
+                    duration-500
+                    hover:border-[#D4AF37]/30
                   "
                 >
-                  {/* IMAGE (slightly different feel than Package) */}
-                  <div className="relative h-[230px] overflow-hidden">
+                  {/* Image */}
+                  <div className="relative overflow-hidden">
                     <img
                       src={destination.image}
                       alt={destination.name}
                       className="
-                        h-full w-full object-cover
-                        transition-transform duration-700
+                        h-[400px]
+                        w-full
+                        object-cover
+                        transition-transform
+                        duration-700
                         group-hover:scale-110
                       "
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
+                    {/* Overlay */}
+                    <div
+                      className="
+                        absolute
+                        inset-0
+                        bg-gradient-to-t
+                        from-black
+                        via-black/40
+                        to-transparent
+                      "
+                    />
+
+                    {/* Bottom Content */}
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <h3 className="text-3xl font-semibold">
+                        {destination.name}
+                      </h3>
+
+                      <div
+                        className="
+                          mt-5
+                          flex
+                          gap-3
+                        "
+                      >
+                        <div
+                          className="
+                            flex-1
+                            rounded-2xl
+                            border
+                            border-white/10
+                            bg-black/40
+                            p-4
+                            backdrop-blur-md
+                          "
+                        >
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/40">
+                            4 + 1
+                          </p>
+
+                          <h4 className="mt-2 text-2xl font-semibold text-[#D4AF37]">
+                            {destination.fare4}
+                          </h4>
+                        </div>
+
+                        <div
+                          className="
+                            flex-1
+                            rounded-2xl
+                            border
+                            border-white/10
+                            bg-black/40
+                            p-4
+                            backdrop-blur-md
+                          "
+                        >
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/40">
+                            6 + 1
+                          </p>
+
+                          <h4 className="mt-2 text-2xl font-semibold text-[#D4AF37]">
+                            {destination.fare6}
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* CONTENT */}
-                  <div className="p-5">
-                    <div className="flex items-center gap-3">
-                      <MapPin size={18} className="text-[#D4AF37]" />
-                      <h3 className="text-xl font-bold">{destination.name}</h3>
-                    </div>
-
-                    {/* FARES */}
-                    <div className="mt-6 grid grid-cols-2 gap-4">
-                      <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">
-                          4 + 1
-                        </p>
-                        <p className="mt-2 text-xl font-bold text-[#D4AF37]">
-                          {destination.fare4}
-                        </p>
-                      </div>
-
-                      <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">
-                          6 + 1
-                        </p>
-                        <p className="mt-2 text-xl font-bold text-[#D4AF37]">
-                          {destination.fare6}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* CTA (slightly different from Package section) */}
+                  {/* Footer CTA */}
+                  <div className="p-6">
                     <a
                       href={`https://wa.me/919347472307?text=${encodeURIComponent(
                         `Hi, I'm interested in booking a trip from Tirupati to ${destination.name}.`,
@@ -131,17 +218,24 @@ export default function Destinations() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="
-                        mt-6 inline-flex w-full items-center justify-center gap-2
-                        rounded-xl border border-white/10
-                        bg-white/5 px-5 py-3
-                        text-sm font-semibold uppercase tracking-[0.15em]
-                        text-white
-                        transition-all duration-300
-                        hover:bg-[#D4AF37] hover:text-black
+                        flex
+                        items-center
+                        justify-between
+                        border
+                        border-white/10
+                        px-5
+                        py-4
+                        transition-all
+                        duration-300
+                        hover:border-[#D4AF37]/30
+                        hover:text-[#D4AF37]
                       "
                     >
-                      Book Route
-                      <ArrowRight size={16} />
+                      <span className="text-sm uppercase tracking-[0.2em]">
+                        Reserve Route
+                      </span>
+
+                      <ArrowRight size={18} />
                     </a>
                   </div>
                 </div>
@@ -150,7 +244,9 @@ export default function Destinations() {
           </Swiper>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]" />
+
+      {/* Bottom Divider */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
     </section>
   );
 }

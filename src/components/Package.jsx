@@ -1,25 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import {
-  Car,
-  Fuel,
-  Ticket,
-  UtensilsCrossed,
-  Shield,
-  CheckCircle2,
-  ArrowRight,
-  ArrowLeft,
-} from "lucide-react";
-import { tourPackages } from "../data/tourPackages";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import GoldTemple from "../assets/gold-temple.jpg";
+import { tourPackages } from "../data/tourPackages";
 
 import "swiper/css";
-import "swiper/css/pagination";
 
 function AnimatedSection({ children, delay = 0 }) {
   const ref = useRef(null);
+
   const inView = useInView(ref, {
     once: true,
     margin: "-80px",
@@ -28,12 +17,11 @@ function AnimatedSection({ children, delay = 0 }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.7,
+        duration: 0.8,
         delay,
-        ease: "easeOut",
       }}
     >
       {children}
@@ -46,177 +34,255 @@ export default function Package() {
 
   return (
     <section
-      id="package"
-      className="relative overflow-hidden bg-black py-16 text-white"
+      id="packages"
+      className="relative overflow-hidden bg-black py-8 text-white lg:py-16"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-black" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-[#D4AF37]" />
 
-      {/* BACKGROUND IMAGE */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${GoldTemple})`,
-        }}
+        className="
+          left-1/2
+          top-0
+          rounded-full
+          bg-[#D4AF37]/10
+          blur-[180px]
+        "
       />
 
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-black/80" />
-
-      {/* GOLD TOP LINE */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-[#D4AF37]" />
-
-      {/* CONTENT */}
-      <div className="relative z-10"></div>
-
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Heading */}
+        {/* Header */}
         <AnimatedSection>
           <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[#D4AF37]">
-              TOUR PACKAGES
+            <p className="text-[11px] uppercase tracking-[0.45em] text-[#D4AF37]">
+              CURATED JOURNEYS
             </p>
 
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Tailored Pilgrimage{" "}
-              <span className="text-[#D4AF37]">Packages</span>
+            <h2 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+              Pilgrimage <span className="text-[#D4AF37] italic">Packages</span>
             </h2>
 
-            <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/70">
-              Explore premium temple tours crafted for comfort, devotion, and
-              seamless travel experiences designed with attention to every
-              detail.
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/60">
+              Carefully designed spiritual journeys combining comfort, devotion
+              and seamless travel experiences.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* Carousel */}
-        <AnimatedSection delay={0.1}>
-          <div className="mt-16 relative">
-            {/* CENTERED WRAPPER */}
-            <div className="relative mx-auto max-w-6xl px-6">
-              {/* LEFT OUTSIDE BUTTON */}
-              <button
-                onClick={() => swiperRef.current?.slidePrev()}
-                className="
-          absolute -left-8 top-1/2 z-20 -translate-y-1/2
-          flex h-14 w-14 items-center justify-center
-          rounded-full border border-white/20
-          bg-black/70 text-white backdrop-blur-md
-          transition hover:bg-[#D4AF37] hover:text-black
-          shadow-[0_10px_30px_rgba(0,0,0,0.6)]
-        "
-              >
-                <ArrowLeft size={20} />
-              </button>
+        {/* Slider */}
+        <AnimatedSection delay={0.2}>
+          <div className="mt-10">
+            <Swiper
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              spaceBetween={28}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1.1,
+                },
+                640: {
+                  slidesPerView: 1.3,
+                },
+                1024: {
+                  slidesPerView: 2,
+                },
+                1280: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {tourPackages.map((pkg, index) => (
+                <SwiperSlide key={`${pkg.slug}-${index}`}>
+                  <div
+                    className="
+                      group
+                      overflow-hidden
+                      rounded-[28px]
+                      border
+                      border-white/10
+                      bg-[#080808]
+                      transition-all
+                      duration-500
+                      hover:border-[#D4AF37]/30
+                    "
+                  >
+                    {/* Image */}
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={pkg.image}
+                        alt={pkg.title}
+                        className="
+                          h-[400px]
+                          w-full
+                          object-cover
+                          transition-transform
+                          duration-700
+                          group-hover:scale-110
+                        "
+                      />
 
-              {/* RIGHT OUTSIDE BUTTON */}
-              <button
-                onClick={() => swiperRef.current?.slideNext()}
-                className="
-          absolute -right-8 top-1/2 z-20 -translate-y-1/2
-          flex h-14 w-14 items-center justify-center
-          rounded-full border border-white/20
-          bg-black/70 text-white backdrop-blur-md
-          transition hover:bg-[#D4AF37] hover:text-black
-          shadow-[0_10px_30px_rgba(0,0,0,0.6)]
-        "
-              >
-                <ArrowRight size={20} />
-              </button>
+                      {/* Overlay */}
+                      <div
+                        className="
+                          absolute
+                          inset-0
+                          bg-gradient-to-t
+                          from-black
+                          via-black/50
+                          to-transparent
+                        "
+                      />
 
-              {/* SWIPER */}
-              <Swiper
-                onSwiper={(swiper) => (swiperRef.current = swiper)}
-                spaceBetween={24}
-                breakpoints={{
-                  0: { slidesPerView: 1.1 },
-                  640: { slidesPerView: 1.3 },
-                  768: { slidesPerView: 2 },
-                  1280: { slidesPerView: 3 },
-                }}
-                className="packageSwiper"
-              >
-                {tourPackages.map((pkg, index) => (
-                  <SwiperSlide key={index} className="h-auto">
-                    <div
-                      className="
-                group relative flex h-full flex-col overflow-hidden
-                rounded-2xl border border-white/10 bg-black
-                transition-all duration-500
-                hover:-translate-y-1 hover:border-[#D4AF37]/40
-                hover:shadow-[0_18px_60px_rgba(212,175,55,0.10)]
-              "
-                    >
-                      {/* Image */}
-                      <div className="relative h-[210px] overflow-hidden">
-                        <img
-                          src={pkg.image}
-                          alt={pkg.title}
+                      {/* Tag */}
+                      <div className="absolute left-6 top-6">
+                        <span
                           className="
-                    h-full w-full object-cover
-                    transition-transform duration-700
-                    group-hover:scale-110
-                  "
-                        />
-                        <div className="absolute inset-0 bg-black/30" />
-
-                        <div className="absolute left-5 top-5">
-                          <span className="rounded-full bg-[#D4AF37] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-black">
-                            {pkg.tag}
-                          </span>
-                        </div>
+                            rounded-full
+                            border
+                            border-[#D4AF37]/30
+                            bg-black/40
+                            px-4
+                            py-2
+                            text-[10px]
+                            uppercase
+                            tracking-[0.25em]
+                            text-[#D4AF37]
+                            backdrop-blur-md
+                          "
+                        >
+                          {pkg.tag}
+                        </span>
                       </div>
 
-                      {/* Content */}
-                      <div className="flex flex-1 flex-col p-5">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
+                      {/* Hover Content */}
+                      <div
+                        className="
+                          absolute
+                          inset-x-0
+                          bottom-0
+                          p-6
+                        "
+                      >
+                        <p className="text-[11px] uppercase tracking-[0.35em] text-[#D4AF37]">
                           {pkg.subtitle}
                         </p>
 
-                        <h3 className="mt-3 min-h-[60px] text-xl font-bold leading-snug text-white">
+                        <h3 className="mt-3 text-2xl font-semibold leading-snug">
                           {pkg.title}
                         </h3>
 
-                        <div className="mt-auto pt-6">
-                          <div className="flex items-end justify-between">
-                            <div>
-                              <p className="text-[10px] uppercase tracking-[0.25em] text-white/40">
-                                Starting From
-                              </p>
-                              <p className="mt-1 text-2xl font-extrabold text-white">
-                                {pkg.price}
-                              </p>
-                            </div>
-
-                            <button
-                              onClick={() => {
-                                window.location.hash = `#/details/${pkg.slug}`;
-                                window.scrollTo({ top: 0, behavior: "smooth" });
-                              }}
-                              className="
-                        flex h-10 w-10 items-center justify-center
-                        rounded-xl bg-[#D4AF37] text-black
-                        transition-all duration-300
-                        group-hover:rotate-45 group-hover:scale-110
-                      "
-                            >
-                              <ArrowRight size={16} />
-                            </button>
-                          </div>
+                        <div
+                          className="
+                            mt-4
+                            max-h-0
+                            overflow-hidden
+                            opacity-0
+                            transition-all
+                            duration-500
+                            group-hover:max-h-40
+                            group-hover:opacity-100
+                          "
+                        >
+                          <p className="text-sm leading-relaxed text-white/75">
+                            {pkg.description}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between p-6">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.3em] text-white/35">
+                          Starting From
+                        </p>
+
+                        <h4 className="mt-2 text-3xl font-light text-[#D4AF37]">
+                          {pkg.price}
+                        </h4>
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          window.location.hash = `#/details/${pkg.slug}`;
+                          window.scrollTo({
+                            top: 0,
+                            behavior: "smooth",
+                          });
+                        }}
+                        className="
+                          flex
+                          items-center
+                          gap-2
+                          rounded-full
+                          border
+                          border-white/10
+                          px-5
+                          py-3
+                          text-sm
+                          transition-all
+                          duration-300
+                          hover:border-[#D4AF37]/40
+                          hover:text-[#D4AF37]
+                        "
+                      >
+                        Explore
+                        <ArrowRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {/* Controls */}
+            <AnimatedSection delay={0.1}>
+              <div className="mt-14 flex justify-center gap-3">
+                <button
+                  onClick={() => swiperRef.current?.slidePrev()}
+                  className="
+                flex
+                h-12
+                w-12
+                items-center
+                justify-center
+                border
+                border-white/10
+                bg-white/[0.02]
+                transition-all
+                duration-300
+                hover:border-[#D4AF37]/40
+                hover:text-[#D4AF37]
+              "
+                >
+                  <ArrowLeft size={18} />
+                </button>
+
+                <button
+                  onClick={() => swiperRef.current?.slideNext()}
+                  className="
+                flex
+                h-12
+                w-12
+                items-center
+                justify-center
+                border
+                border-white/10
+                bg-white/[0.02]
+                transition-all
+                duration-300
+                hover:border-[#D4AF37]/40
+                hover:text-[#D4AF37]
+              "
+                >
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+            </AnimatedSection>
           </div>
         </AnimatedSection>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]" />
+      {/* Bottom Divider */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
     </section>
   );
 }

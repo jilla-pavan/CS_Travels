@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ShieldCheck, Car, MapPinned, Headphones } from "lucide-react";
+import { Car, ShieldCheck, Headphones, MapPinned } from "lucide-react";
 import AboutBg from "../assets/paadalu-bg.png";
 
 function AnimatedSection({ children, delay = 0 }) {
@@ -8,18 +8,18 @@ function AnimatedSection({ children, delay = 0 }) {
 
   const inView = useInView(ref, {
     once: true,
-    margin: "-80px",
+    margin: "-100px",
   });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.7,
+        duration: 0.8,
         delay,
-        ease: "easeOut",
+        ease: [0.22, 1, 0.36, 1],
       }}
     >
       {children}
@@ -29,24 +29,20 @@ function AnimatedSection({ children, delay = 0 }) {
 
 const features = [
   {
-    icon: <Car size={22} />,
-    title: "Premium Vehicles",
-    desc: "Clean, comfortable and well-maintained vehicles for every journey.",
+    icon: <Car size={20} />,
+    title: "Premium Fleet",
   },
   {
-    icon: <MapPinned size={22} />,
+    icon: <MapPinned size={20} />,
     title: "Local Expertise",
-    desc: "Deep knowledge of Tirupati temples, routes and travel planning.",
   },
   {
-    icon: <ShieldCheck size={22} />,
+    icon: <ShieldCheck size={20} />,
     title: "Trusted Service",
-    desc: "Transparent pricing with reliable drivers you can depend on.",
   },
   {
-    icon: <Headphones size={22} />,
-    title: "Dedicated Support",
-    desc: "Instant assistance before, during and after your journey.",
+    icon: <Headphones size={20} />,
+    title: "24/7 Support",
   },
 ];
 
@@ -56,114 +52,221 @@ export default function About() {
       id="about"
       className="relative overflow-hidden bg-black py-16 text-white"
     >
-      <div className="absolute inset-0 bg-black" />
       {/* Background */}
       <div className="absolute inset-0 bg-black" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-[#D4AF37]" />
 
-      {/* BACKGROUND IMAGE */}
+      {/* Gold Glow */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${AboutBg})`,
-        }}
+        className="
+          absolute
+          left-1/2
+          top-0
+          h-[600px]
+          w-[600px]
+          -translate-x-1/2
+          rounded-full
+          bg-[#D4AF37]/10
+          blur-[180px]
+        "
       />
 
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-black/90" />
+      {/* Top Divider */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-        {/* HEADING */}
-        <AnimatedSection>
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[#D4AF37]">
-              ABOUT CS TRAVELS
-            </p>
+        <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
+          {/* Left Content */}
+          <AnimatedSection>
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.45em] text-[#D4AF37]">
+                ABOUT CS TRAVELS
+              </p>
 
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Travel With Comfort,
-              <span className="block text-[#D4AF37]">Journey With Trust</span>
-            </h2>
-
-            <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-white/60">
-              CS Travels Tirupati delivers premium pilgrimage and travel
-              experiences designed for comfort, reliability, and seamless
-              journeys across South India.
-            </p>
-          </div>
-        </AnimatedSection>
-
-        {/* FEATURE GRID */}
-        <AnimatedSection delay={0.1}>
-          <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {features.map((item, i) => (
-              <div
-                key={i}
+              <h2
                 className="
-                  group relative overflow-hidden
-                  rounded-2xl border border-white/10
-                  bg-white/5 p-6
-                  backdrop-blur-md
-                  transition-all duration-500
-                  hover:-translate-y-2
-                  hover:border-[#D4AF37]/30
-                  hover:shadow-[0_20px_60px_rgba(212,175,55,0.08)]
+                  mt-6
+                  text-4xl
+                  font-semibold
+                  leading-tight
+                  tracking-tight
+                  md:text-5xl
+                  lg:text-6xl
                 "
               >
-                <div className="text-[#D4AF37]">{item.icon}</div>
+                Travel With Trust.
+                <br />
+                <span className="text-[#D4AF37] italic">
+                  Journey With Comfort.
+                </span>
+              </h2>
 
-                <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
+              <p
+                className="
+                  mt-8
+                  max-w-xl
+                  text-base
+                  leading-relaxed
+                  text-white/60
+                  
+                "
+              >
+                From Tirumala Darshan to local sightseeing and family pilgrimage
+                tours, CS Travels delivers trusted travel experiences focused on
+                comfort, convenience, and devotion.
+              </p>
 
-                <p className="mt-2 text-sm leading-relaxed text-white/60">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
+              {/* Features */}
+              <div className="mt-12 grid gap-5 sm:grid-cols-2">
+                {features.map((item, index) => (
+                  <div
+                    key={index}
+                    className="
+                      flex
+                      items-center
+                      gap-4
+                      border-b
+                      border-white/10
+                      pb-4
+                    "
+                  >
+                    <div
+                      className="
+                        flex
+                        h-11
+                        w-11
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#D4AF37]/30
+                        text-[#D4AF37]
+                      "
+                    >
+                      {item.icon}
+                    </div>
 
-        {/* TRUST STRIP */}
-        <AnimatedSection delay={0.2}>
-          <div className="mt-16 rounded-2xl border border-[#D4AF37]/30 bg-black/60 p-8 backdrop-blur-md">
-            <div className="grid gap-8 text-center md:grid-cols-4">
-              <div>
-                <p className="text-3xl font-extrabold text-[#D4AF37]">24/7</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-white/50">
-                  Support
-                </p>
-              </div>
-
-              <div>
-                <p className="text-3xl font-extrabold text-[#D4AF37]">
-                  Private
-                </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-white/50">
-                  Vehicle Tours
-                </p>
-              </div>
-
-              <div>
-                <p className="text-3xl font-extrabold text-[#D4AF37]">
-                  Premium
-                </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-white/50">
-                  Experience
-                </p>
-              </div>
-
-              <div>
-                <p className="text-3xl font-extrabold text-[#D4AF37]">
-                  Trusted
-                </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-white/50">
-                  Tirupati Partner
-                </p>
+                    <span className="text-sm font-medium text-white">
+                      {item.title}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
+
+          {/* Right Image */}
+          <AnimatedSection delay={0.1}>
+            <div
+              className="
+                group
+                relative
+                overflow-hidden
+                rounded-[30px]
+                border
+                border-white/10
+              "
+            >
+              <img
+                src={AboutBg}
+                alt="CS Travels Tirupati"
+                className="
+                  h-[500px]
+                  w-full
+                  object-cover
+                  transition-transform
+                  duration-1000
+                  group-hover:scale-105
+                "
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+              {/* Stats */}
+              <div
+                className="
+                  absolute
+                  inset-x-0
+                  bottom-0
+                  p-8
+                  lg:p-10
+                "
+              >
+                <div
+                  className="
+                    grid
+                    grid-cols-3
+                    gap-4
+                    rounded-3xl
+                    border
+                    border-white/10
+                    bg-black/40
+                    p-6
+                    backdrop-blur-md
+                  "
+                >
+                  <div className="text-center">
+                    <h3 className="text-3xl font-semibold text-[#D4AF37] lg:text-4xl">
+                      500+
+                    </h3>
+
+                    <p
+                      className="
+                        mt-2
+                        text-[10px]
+                        uppercase
+                        tracking-[0.3em]
+                        text-white/50
+                      "
+                    >
+                      Travelers
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <h3 className="text-3xl font-semibold text-[#D4AF37] lg:text-4xl">
+                      10+
+                    </h3>
+
+                    <p
+                      className="
+                        mt-2
+                        text-[10px]
+                        uppercase
+                        tracking-[0.3em]
+                        text-white/50
+                      "
+                    >
+                      Routes
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <h3 className="text-3xl font-semibold text-[#D4AF37] lg:text-4xl">
+                      4★
+                    </h3>
+
+                    <p
+                      className="
+                        mt-2
+                        text-[10px]
+                        uppercase
+                        tracking-[0.3em]
+                        text-white/50
+                      "
+                    >
+                      Rating
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]" />
+
+      {/* Bottom Divider */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
     </section>
   );
 }
