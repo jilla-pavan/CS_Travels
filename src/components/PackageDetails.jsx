@@ -191,7 +191,6 @@ export default function PackageDetails() {
         </div>
       </section>
 
-      <Footer />
     </section>
   );
 }
