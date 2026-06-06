@@ -14,10 +14,10 @@ function AnimatedSection({ children, delay = 0 }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.8,
+        duration: 0.7,
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}
@@ -28,71 +28,35 @@ function AnimatedSection({ children, delay = 0 }) {
 }
 
 const features = [
-  {
-    icon: <Car size={20} />,
-    title: "Premium Fleet",
-  },
-  {
-    icon: <MapPinned size={20} />,
-    title: "Local Expertise",
-  },
-  {
-    icon: <ShieldCheck size={20} />,
-    title: "Trusted Service",
-  },
-  {
-    icon: <Headphones size={20} />,
-    title: "24/7 Support",
-  },
+  { icon: <Car size={18} />, title: "Premium Fleet" },
+  { icon: <MapPinned size={18} />, title: "Local Expertise" },
+  { icon: <ShieldCheck size={18} />, title: "Trusted Service" },
+  { icon: <Headphones size={18} />, title: "24/7 Support" },
 ];
 
 export default function About() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-black py-16 text-white"
+      className="relative overflow-hidden bg-black py-12 sm:py-16 lg:py-20 text-white"
     >
-      {/* Background */}
+      {/* Background glow */}
       <div className="absolute inset-0 bg-black" />
+      <div className="absolute left-1/2 top-0 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] -translate-x-1/2 rounded-full bg-[#D4AF37]/10 blur-[160px]" />
 
-      {/* Gold Glow */}
-      <div
-        className="
-          absolute
-          left-1/2
-          top-0
-          h-[600px]
-          w-[600px]
-          -translate-x-1/2
-          rounded-full
-          bg-[#D4AF37]/10
-          blur-[180px]
-        "
-      />
-
-      {/* Top Divider */}
+      {/* Divider */}
       <div className="absolute top-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-          {/* Left Content */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+          {/* LEFT CONTENT */}
           <AnimatedSection>
-            <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.45em] text-[#D4AF37]">
+            <div className="text-center lg:text-left">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-[#D4AF37]">
                 ABOUT CS TRAVELS
               </p>
 
-              <h2
-                className="
-                  mt-6
-                  text-4xl
-                  font-semibold
-                  leading-tight
-                  tracking-tight
-                  md:text-5xl
-                  lg:text-6xl
-                "
-              >
+              <h2 className="mt-4 sm:mt-6 text-3xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
                 Travel With Trust.
                 <br />
                 <span className="text-[#D4AF37] italic">
@@ -100,52 +64,24 @@ export default function About() {
                 </span>
               </h2>
 
-              <p
-                className="
-                  mt-8
-                  max-w-xl
-                  text-base
-                  leading-relaxed
-                  text-white/60
-                  
-                "
-              >
+              <p className="mt-5 sm:mt-8 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base leading-relaxed text-white/60 px-2 sm:px-0">
                 From Tirumala Darshan to local sightseeing and family pilgrimage
                 tours, CS Travels delivers trusted travel experiences focused on
                 comfort, convenience, and devotion.
               </p>
 
-              {/* Features */}
-              <div className="mt-12 grid gap-5 sm:grid-cols-2">
+              {/* FEATURES */}
+              <div className="mt-8 sm:mt-12 grid gap-4 sm:grid-cols-2">
                 {features.map((item, index) => (
                   <div
                     key={index}
-                    className="
-                      flex
-                      items-center
-                      gap-4
-                      border-b
-                      border-white/10
-                      pb-4
-                    "
+                    className="flex items-center gap-3 sm:gap-4 border-b border-white/10 pb-3 sm:pb-4"
                   >
-                    <div
-                      className="
-                        flex
-                        h-11
-                        w-11
-                        items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-[#D4AF37]/30
-                        text-[#D4AF37]
-                      "
-                    >
+                    <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#D4AF37]">
                       {item.icon}
                     </div>
 
-                    <span className="text-sm font-medium text-white">
+                    <span className="text-sm sm:text-base font-medium text-white">
                       {item.title}
                     </span>
                   </div>
@@ -154,107 +90,48 @@ export default function About() {
             </div>
           </AnimatedSection>
 
-          {/* Right Image */}
+          {/* RIGHT IMAGE */}
           <AnimatedSection delay={0.1}>
-            <div
-              className="
-                group
-                relative
-                overflow-hidden
-                rounded-[30px]
-                border
-                border-white/10
-              "
-            >
+            <div className="group relative overflow-hidden rounded-2xl sm:rounded-[30px] border border-white/10">
               <img
                 src={AboutBg}
                 alt="CS Travels Tirupati"
                 className="
-                  h-[500px]
-                  w-full
-                  object-cover
-                  transition-transform
-                  duration-1000
+                  h-[260px] sm:h-[380px] lg:h-[500px]
+                  w-full object-cover
+                  transition-transform duration-1000
                   group-hover:scale-105
                 "
               />
 
-              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-              {/* Stats */}
-              <div
-                className="
-                  absolute
-                  inset-x-0
-                  bottom-0
-                  p-8
-                  lg:p-10
-                "
-              >
-                <div
-                  className="
-                    grid
-                    grid-cols-3
-                    gap-4
-                    rounded-3xl
-                    border
-                    border-white/10
-                    bg-black/40
-                    p-6
-                    backdrop-blur-md
-                  "
-                >
+              {/* STATS */}
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 lg:p-8">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-white/10 bg-black/40 p-3 sm:p-5 lg:p-6 backdrop-blur-md">
                   <div className="text-center">
-                    <h3 className="text-3xl font-semibold text-[#D4AF37] lg:text-4xl">
+                    <h3 className="text-xl sm:text-3xl lg:text-4xl font-semibold text-[#D4AF37]">
                       500+
                     </h3>
-
-                    <p
-                      className="
-                        mt-2
-                        text-[10px]
-                        uppercase
-                        tracking-[0.3em]
-                        text-white/50
-                      "
-                    >
+                    <p className="mt-1 sm:mt-2 text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-white/50">
                       Travelers
                     </p>
                   </div>
 
                   <div className="text-center">
-                    <h3 className="text-3xl font-semibold text-[#D4AF37] lg:text-4xl">
+                    <h3 className="text-xl sm:text-3xl lg:text-4xl font-semibold text-[#D4AF37]">
                       10+
                     </h3>
-
-                    <p
-                      className="
-                        mt-2
-                        text-[10px]
-                        uppercase
-                        tracking-[0.3em]
-                        text-white/50
-                      "
-                    >
+                    <p className="mt-1 sm:mt-2 text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-white/50">
                       Routes
                     </p>
                   </div>
 
                   <div className="text-center">
-                    <h3 className="text-3xl font-semibold text-[#D4AF37] lg:text-4xl">
+                    <h3 className="text-xl sm:text-3xl lg:text-4xl font-semibold text-[#D4AF37]">
                       4★
                     </h3>
-
-                    <p
-                      className="
-                        mt-2
-                        text-[10px]
-                        uppercase
-                        tracking-[0.3em]
-                        text-white/50
-                      "
-                    >
+                    <p className="mt-1 sm:mt-2 text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-white/50">
                       Rating
                     </p>
                   </div>
@@ -265,7 +142,6 @@ export default function About() {
         </div>
       </div>
 
-      {/* Bottom Divider */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
     </section>
   );

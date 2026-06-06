@@ -52,99 +52,62 @@ export default function Reviews() {
   return (
     <section
       id="reviews"
-      className="relative overflow-hidden bg-black py-16 text-white"
+      className="relative overflow-hidden bg-black py-12 sm:py-16 lg:py-20 text-white"
     >
-      {/* Background Glow */}
-      <div
-        className="
-          absolute
-          left-1/2
-          top-0
-          h-[500px]
-          w-[500px]
-          -translate-x-1/2
-          rounded-full
-          bg-[#D4AF37]/10
-          blur-[160px]
-        "
-      />
+      {/* Glow */}
+      <div className="absolute left-1/2 top-0 h-[300px] w-[300px] sm:h-[450px] sm:w-[450px] -translate-x-1/2 rounded-full bg-[#D4AF37]/10 blur-[140px]" />
 
-      {/* Header */}
-      <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
-        <p className="text-[11px] uppercase tracking-[0.45em] text-[#D4AF37]">
+      {/* HEADER */}
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 text-center">
+        <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-[#D4AF37]">
           TESTIMONIALS
         </p>
 
-        <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+        <h2 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight">
           What Our <span className="text-[#D4AF37] italic">Travelers</span> Say
         </h2>
 
-        <p className="mx-auto mt-5 max-w-2xl text-white/50">
+        <p className="mx-auto mt-4 sm:mt-5 max-w-xl sm:max-w-2xl text-sm sm:text-base text-white/50 px-2 sm:px-0">
           Trusted by pilgrims and families across South India for comfortable
-          journeys, seamless darshan experiences and exceptional service.
+          journeys and seamless darshan experiences.
         </p>
       </div>
 
-      {/* Marquee */}
-      <div className="relative mt-16 overflow-hidden">
-        {/* Left Fade */}
-        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-32 bg-gradient-to-r from-black via-black to-transparent" />
+      {/* MARQUEE */}
+      <div className="relative mt-10 sm:mt-16 overflow-hidden">
+        {/* fades */}
+        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-16 sm:w-32 bg-gradient-to-r from-black to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-16 sm:w-32 bg-gradient-to-l from-black to-transparent" />
 
-        {/* Right Fade */}
-        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-32 bg-gradient-to-l from-black via-black to-transparent" />
-
-        <div className="marquee-track flex gap-6">
+        <div className="marquee-track flex gap-4 sm:gap-6">
           {marqueeReviews.map((r, i) => (
             <div
               key={i}
               className="
-                group
-                relative
-                w-[350px]
+                group relative
+                w-[260px] sm:w-[320px] lg:w-[350px]
                 flex-shrink-0
                 overflow-hidden
-                rounded-[10px]
-                border
-                border-white/10
+                rounded-xl sm:rounded-2xl
+                border border-white/10
                 bg-[#0A0A0A]
-                p-7
-                transition-all
-                duration-500
+                p-4 sm:p-6 lg:p-7
+                transition-all duration-500
                 hover:border-[#D4AF37]/40
               "
             >
-              <Quote
-                size={28}
-                strokeWidth={1.5}
-                className="text-[#D4AF37]/80"
-              />
+              <Quote size={22} className="text-[#D4AF37]/80" />
 
-              <p
-                className="
-                  mt-5
-                  text-[15px]
-                  leading-relaxed
-                  text-white/75
-                "
-              >
+              <p className="mt-4 sm:mt-5 text-xs sm:text-sm lg:text-[15px] leading-relaxed text-white/75">
                 "{r.review}"
               </p>
 
-              <div
-                className="
-                  mt-7
-                  flex
-                  items-center
-                  justify-between
-                  border-t
-                  border-white/10
-                  pt-5
-                "
-              >
+              <div className="mt-5 sm:mt-7 flex items-center justify-between border-t border-white/10 pt-4 sm:pt-5">
                 <div>
-                  <p className="font-medium text-white">{r.name}</p>
-
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/40">
+                  <p className="font-medium text-sm sm:text-base text-white">
+                    {r.name}
+                  </p>
+                  <p className="mt-1 text-[10px] sm:text-xs uppercase tracking-[0.18em] text-white/40">
                     {r.place}
                   </p>
                 </div>
@@ -156,16 +119,15 @@ export default function Reviews() {
         </div>
       </div>
 
-      {/* Bottom Divider */}
+      {/* divider */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D4AF37]/20" />
 
-      {/* Component Styles */}
+      {/* animation */}
       <style jsx>{`
         @keyframes marquee {
           from {
             transform: translateX(0);
           }
-
           to {
             transform: translateX(-50%);
           }
@@ -173,7 +135,7 @@ export default function Reviews() {
 
         .marquee-track {
           width: max-content;
-          animation: marquee 40s linear infinite;
+          animation: marquee 35s linear infinite;
         }
 
         .marquee-track:hover {
