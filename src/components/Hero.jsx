@@ -144,7 +144,7 @@ export default function Hero() {
               transition={{ delay: 0.5 }}
               className="mt-12 sm:mt-20"
             >
-              <div className="mx-auto flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-0 sm:justify-between max-w-4xl">
+              <div className="mx-auto flex flex-col sm:flex-row items-center justify-center mb-6 gap-8 sm:gap-0 sm:justify-between max-w-4xl">
                 <div className="text-center px-4">
                   <h3 className="text-3xl sm:text-4xl font-light text-[#D4AF37]">
                     500+
