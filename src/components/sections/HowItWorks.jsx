@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import { MessageCircle, ClipboardCheck, UserCheck, Car } from "lucide-react";
-import { Eyebrow } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
+import { Picture } from "../ui/Image";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import { loadGsap } from "../../lib/gsap-loader";
+import roadImage from "../../assets/Journey_Background.png?preset=scene";
 
 const STEPS = [
   {
@@ -110,12 +111,33 @@ export default function HowItWorks() {
       ref={sectionRef}
       id="how-it-works"
       aria-labelledby="how-heading"
-      className="relative overflow-hidden bg-ink-900 py-20 lg:py-28"
+      className="relative isolate overflow-hidden bg-ink-900 py-24 lg:py-32"
     >
+      {/*
+        The winding ghat road, full-bleed.
+
+        Not decoration — it's the section's own metaphor. Four steps that end in
+        "Travel" sitting on the road up to Tirumala is the one place on the page
+        where the image and the copy are saying the same thing.
+
+        It also breaks the page's rhythm: every other section is a flat surface,
+        so a full-bleed photograph here stops the scroll.
+      */}
+      <Picture
+        source={roadImage}
+        alt=""
+        sizes="100vw"
+        className="absolute inset-0 -z-20 h-full w-full"
+        imgClassName="object-cover object-center"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(8,21,42,0.94)_0%,rgba(8,21,42,0.76)_50%,rgba(8,21,42,0.95)_100%)]"
+      />
+
       <div className="relative z-raised mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <Reveal className="max-w-2xl">
-          <Eyebrow>How it works</Eyebrow>
-          <h2 id="how-heading" className="mt-5 text-h2 text-fg">
+          <h2 id="how-heading" className="text-h2 text-fg">
             Four steps, <span className="text-gold-400">no surprises</span>
           </h2>
           <p className="mt-5 text-body-lg text-fg-secondary">

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone } from "lucide-react";
 import { Button } from "../components/ui/Button";
-import { Eyebrow } from "../components/ui/Badge";
 import { Reveal } from "../components/ui/Reveal";
 import { PHONE_DISPLAY, PHONE_HREF } from "../lib/utils";
 
@@ -20,9 +19,8 @@ export default function NotFound() {
       <div className="pointer-events-none absolute inset-0 bg-ink-mesh" />
 
       <Reveal className="relative z-raised mx-auto max-w-xl text-center">
-        <Eyebrow>Page not found</Eyebrow>
 
-        <h1 className="mt-6 text-h1 text-fg">
+        <h1 className="text-h1 text-fg">
           This route doesn&apos;t exist
         </h1>
 

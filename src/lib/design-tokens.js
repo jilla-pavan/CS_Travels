@@ -161,6 +161,18 @@ export const fontFamily = {
     "Segoe UI",
     "sans-serif",
   ],
+
+  /**
+   * The display voice. Used for section headings and the hero — never for UI,
+   * labels, or anything under ~24px, where its high contrast turns to mush.
+   *
+   * Two faces doing clearly different jobs is what separates designed
+   * typography from configured typography.
+   */
+  /* Keyed `serif`, not `display`: Tailwind would emit a `.font-display`
+     utility, which collides with the `font-display` @font-face descriptor and
+     makes PostCSS reject the @apply. */
+  serif: ["Instrument Serif", "Georgia", "Times New Roman", "serif"],
 };
 
 /* ------------------------------------------------------------------ motion */

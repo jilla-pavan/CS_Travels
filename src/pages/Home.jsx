@@ -5,6 +5,7 @@ import Services from "../components/sections/Services";
 import Packages from "../components/sections/Packages";
 import Fleet from "../components/sections/Fleet";
 import TempleCircuit from "../components/sections/TempleCircuit";
+import TheClimb from "../components/sections/TheClimb";
 import WhyUs from "../components/sections/WhyUs";
 import Destinations from "../components/sections/Destinations";
 import HowItWorks from "../components/sections/HowItWorks";
@@ -35,6 +36,7 @@ export default function Home() {
       <Services />
       <Packages />
       <Fleet />
+      <TheClimb />
       <TempleCircuit />
       <Destinations />
       <WhyUs />

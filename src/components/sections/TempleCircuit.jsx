@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Moon, MessageCircle } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/Tabs";
-import { Eyebrow, Badge } from "../ui/Badge";
+import { Badge } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
 import { templeCircuit } from "../../data/templeCircuit";
@@ -32,9 +32,8 @@ export default function TempleCircuit() {
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           {/* ------------------------------------------------------ intro */}
           <Reveal className="min-w-0">
-            <Eyebrow>Signature route</Eyebrow>
 
-            <h2 id="circuit-heading" className="mt-5 text-h2 text-fg">
+            <h2 id="circuit-heading" className="text-h2 text-fg">
               The nine-temple <span className="text-gold-400">circuit</span>
             </h2>
 

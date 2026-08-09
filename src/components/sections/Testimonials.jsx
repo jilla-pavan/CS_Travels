@@ -7,7 +7,6 @@ import {
   CarouselDots,
 } from "../ui/Carousel";
 import { Card, CardBody } from "../ui/Card";
-import { Eyebrow } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
 import { reviews } from "../../data/reviews";
 
@@ -34,8 +33,7 @@ export default function Testimonials() {
 
       <div className="relative z-raised mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <Reveal className="max-w-2xl">
-          <Eyebrow>Travellers</Eyebrow>
-          <h2 id="testimonials-heading" className="mt-5 text-h2 text-fg">
+          <h2 id="testimonials-heading" className="text-h2 text-fg">
             What people say <span className="text-gold-400">afterwards</span>
           </h2>
         </Reveal>

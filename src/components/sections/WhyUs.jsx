@@ -1,5 +1,4 @@
 import { MapPin, Star, Car, Route, Check } from "lucide-react";
-import { Eyebrow } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
 import { circuitHighlights, reasons } from "../../data/whyUs";
 
@@ -30,8 +29,7 @@ export default function WhyUs() {
           {/* ------------------------------------------------- highlights */}
           <div className="min-w-0">
             <Reveal preset="left">
-              <Eyebrow>Why this route</Eyebrow>
-              <h2 id="why-us-heading" className="mt-5 text-h2 text-fg">
+              <h2 id="why-us-heading" className="text-h2 text-fg">
                 Planned by people who{" "}
                 <span className="text-gold-400">drive it</span>
               </h2>
@@ -59,7 +57,6 @@ export default function WhyUs() {
           {/* ---------------------------------------------------- reasons */}
           <Reveal preset="right" delay={0.1} className="min-w-0">
             <div className="rounded-xl border border-white/[0.08] bg-ink-900 p-8 shadow-card lg:sticky lg:top-28">
-              <Eyebrow>Our promise</Eyebrow>
 
               <p className="mt-5 text-body-lg text-fg-secondary">
                 We&apos;re a Tirupati operator, not a booking platform. The

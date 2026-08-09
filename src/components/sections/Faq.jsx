@@ -5,7 +5,6 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "../ui/Accordion";
-import { Eyebrow } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
 import { faqs } from "../../data/faqs";
@@ -33,8 +32,7 @@ export default function Faq() {
       <div className="relative z-raised mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <Reveal className="min-w-0">
-            <Eyebrow>Questions</Eyebrow>
-            <h2 id="faq-heading" className="mt-5 text-h2 text-fg">
+            <h2 id="faq-heading" className="text-h2 text-fg">
               Before you <span className="text-gold-400">book</span>
             </h2>
             <p className="mt-5 text-body-lg text-fg-secondary">

@@ -183,15 +183,68 @@ export function MotionProvider({ children }) {
 
   /* Late-loading images change page height and leave ScrollTrigger's cached
      positions stale, which desynchronises every pinned section below them. */
+  /**
+   * Keep ScrollTrigger's cached positions honest.
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * This is not housekeeping — a stale cache here is a visible, page-breaking
+   * bug. ScrollTrigger measures a pin's start position once, at creation. If
+   * anything above that pin changes height afterwards, the pin still fires at
+   * the OLD scroll position: the pinned section goes `position: fixed` while
+   * the section above it is still on screen, and the two render on top of each
+   * other.
+   *
+   * That is exactly what happened to Fleet. The editorial Packages spread above
+   * it is over 2,000px tall, and between first paint and settle the page grows
+   * — the display serif swaps in, remote images resolve, fonts re-flow headings.
+   * Every one of those moves Fleet's real start position downward while
+   * ScrollTrigger still believes the original number.
+   *
+   * `window.load` alone was not enough, because GSAP is loaded lazily on scroll
+   * intent, which usually happens AFTER load has already fired — so the one
+   * refresh that existed was routinely a no-op.
+   *
+   * A ResizeObserver on <body> catches every cause at once, whatever it is.
+   * Debounced with rAF so a burst of image loads triggers one refresh, not
+   * twenty.
+   * ─────────────────────────────────────────────────────────────────────────
+   */
   useEffect(() => {
+    let frame = null;
+    let lastHeight = 0;
+
     const refresh = () => {
-      /* Only if something already pulled GSAP in. Calling loadGsap() here would
-         fetch the chunk on every single page load and undo the lazy split. */
+      /* Never pull GSAP just to refresh it — that would undo the lazy split. */
       if (!isGsapLoaded()) return;
       loadGsap().then(({ ScrollTrigger }) => ScrollTrigger.refresh());
     };
+
+    const scheduleRefresh = () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        const height = document.body.scrollHeight;
+        /* Only when the page actually changed length. A pinned section itself
+           mutates layout while pinning, and refreshing on that would loop. */
+        if (Math.abs(height - lastHeight) < 2) return;
+        lastHeight = height;
+        refresh();
+      });
+    };
+
+    const observer = new ResizeObserver(scheduleRefresh);
+    observer.observe(document.body);
+
     window.addEventListener("load", refresh);
-    return () => window.removeEventListener("load", refresh);
+    /* Fonts swapping is a height change the ResizeObserver may miss if it
+       lands between frames. */
+    document.fonts?.ready?.then(refresh);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("load", refresh);
+    };
   }, []);
 
   const value = useMemo(

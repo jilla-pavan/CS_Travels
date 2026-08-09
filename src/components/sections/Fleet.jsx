@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import { Users, Briefcase, Snowflake, MessageCircle } from "lucide-react";
-import { Eyebrow, Badge } from "../ui/Badge";
+import { Badge } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
+import { Picture } from "../ui/Image";
+import fleetImage from "../../assets/Packages_Background.png?preset=scene";
 import { fleet, fleetTerms } from "../../data/fleet";
 import { cn, whatsappLink } from "../../lib/utils";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
@@ -80,27 +82,24 @@ export default function Fleet() {
     });
 
     /**
-     * Only fetch GSAP once this section is within a viewport of being reached.
+     * Set up on idle, not on intersection.
      *
-     * Calling loadGsap() straight from the effect pulled the chunk on page load
-     * for every visitor, which is most of what making it lazy was for. This
-     * section sits well down the page; a visitor who never scrolls that far
-     * never downloads it.
+     * The IntersectionObserver gate was the efficient choice, but IO callbacks
+     * are suppressed entirely while a document is hidden — so in a background
+     * tab the pin silently never initialises, and the section is left in a
+     * half-configured state. It also made the bug that broke this section
+     * impossible to reproduce locally.
+     *
+     * Idle runs regardless of visibility and still keeps GSAP off the critical
+     * path.
      */
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        setup();
-      },
-      { rootMargin: "100% 0px" },
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    const schedule = window.requestIdleCallback ?? ((fn) => setTimeout(fn, 300));
+    const cancel = window.cancelIdleCallback ?? clearTimeout;
+    const handle = schedule(setup, { timeout: 2500 });
 
     return () => {
       cancelled = true;
-      observer.disconnect();
+      cancel(handle);
       mm?.revert();
     };
   }, [prefersReducedMotion]);
@@ -110,14 +109,36 @@ export default function Fleet() {
       ref={sectionRef}
       id="fleet"
       aria-labelledby="fleet-heading"
-      className="relative overflow-hidden bg-ink-950 py-20 lg:flex lg:h-screen lg:flex-col lg:justify-center lg:py-0"
+      className="relative isolate overflow-hidden bg-ink-950 py-20 lg:flex lg:h-screen lg:flex-col lg:justify-center lg:py-0"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-ink-mesh" />
+      {/*
+        Real photography instead of a mesh gradient.
+
+        This section used to be four empty gradient plates on a flat background —
+        the least finished thing on the page. The vehicle-at-a-temple photograph
+        does the work the plates were standing in for, and putting it BEHIND the
+        cards rather than inside them means one image serves all four rather than
+        the same picture repeating in every card.
+      */}
+      <Picture
+        source={fleetImage}
+        alt=""
+        sizes="100vw"
+        className="absolute inset-0 -z-20 h-full w-full"
+        imgClassName="object-cover object-[70%_center]"
+      />
+
+      {/* Graded hard so the spec cards stay the subject and the photograph
+          stays atmosphere. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,13,26,0.92)_0%,rgba(5,13,26,0.58)_45%,rgba(5,13,26,0.90)_100%)]"
+      />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-ink-mesh opacity-60" />
 
       <div className="relative z-raised mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-10">
         <Reveal className="max-w-2xl">
-          <Eyebrow>The fleet</Eyebrow>
-          <h2 id="fleet-heading" className="mt-5 text-h2 text-fg">
+          <h2 id="fleet-heading" className="text-h2 text-fg">
             Pick the <span className="text-gold-400">right vehicle</span>
           </h2>
           <p className="mt-5 text-body-lg text-fg-secondary">
@@ -175,38 +196,35 @@ function VehicleCard({ vehicle }) {
   ];
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-ink-900 shadow-card transition-[border-color,box-shadow] duration-standard ease-state hover:border-gold-500/30 hover:shadow-lift">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.10] bg-ink-950/85 shadow-card backdrop-blur-md transition-[border-color,box-shadow] duration-standard ease-state hover:border-gold-500/35 hover:shadow-lift">
       {/*
-        Studio plate.
+        The 4:3 "studio plate" is gone.
 
-        There is no vehicle photography (CONTENT-BRIEF.md §4/§8), so rather than
-        fake it with stock cars that aren't the actual fleet, this is a lit stage
-        with the class set typographically — the spec-panel treatment a
-        configurator uses. It reads as deliberate, and it becomes a real photo
-        slot the moment images exist.
+        It was a 300px empty gradient box repeated four times, standing in for
+        vehicle photography — and four empty boxes in a row read as unfinished,
+        not as restraint. The section's own photograph now carries the imagery,
+        so each card leads with the thing a customer actually chooses on: the
+        name, the class, and the rate.
 
-        The "studio lighting" is a static radial gradient plus one gold floor
-        line. No animation: this is repeated four times across a pinned section
-        and an animated gradient per card is exactly the kind of thing that
-        costs frames on a mid-range Android.
+        Glass is earned here rather than decorative: these cards sit over a
+        graded photograph, which is exactly the backdrop blur was designed for.
       */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(ellipse_60%_50%_at_50%_35%,rgba(26,66,112,0.55),transparent_70%),linear-gradient(180deg,#081426,#050D1A)]">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-8 bottom-10 h-px bg-[linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent)]"
-        />
-
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+      {/* min-h keeps the header a fixed height across all four cards — without
+          it, "Toyota Innova Crysta" wraps to two lines and that card's divider
+          sits lower than its neighbours in a row that is meant to be scanned. */}
+      <div className="flex min-h-[7.5rem] items-start justify-between gap-4 border-b border-white/[0.08] p-6 pb-5">
+        <div className="min-w-0">
           <Badge variant="muted" size="sm">
             {vehicle.className}
           </Badge>
-          <p className="mt-4 text-h3 text-fg">{vehicle.name}</p>
+          <p className="mt-3 text-h4 text-fg">{vehicle.name}</p>
         </div>
 
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(180deg,transparent,#0B1F3A)]"
-        />
+        <div className="shrink-0 text-right">
+          <p className="text-overline uppercase text-fg-muted">Per km</p>
+          {/* @placeholder — rate from data/fleet.js */}
+          <p className="mt-1 text-h3 text-gold-300">₹{vehicle.perKm}</p>
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col p-6">
@@ -232,14 +250,10 @@ function VehicleCard({ vehicle }) {
           ))}
         </ul>
 
+        {/* The rate lives in the card header now, next to the name — one price
+            per card, at the point of comparison. */}
         <div className="mt-auto pt-6">
-          <div className="flex items-baseline justify-between border-t border-white/[0.08] pt-5">
-            <span className="text-overline uppercase text-fg-muted">Per km</span>
-            {/* @placeholder — rate from data/fleet.js */}
-            <span className="text-h3 text-gold-400">₹{vehicle.perKm}</span>
-          </div>
-
-          <Button asChild variant="primary" size="md" className="mt-5 w-full">
+          <Button asChild variant="primary" size="md" className="w-full">
             <a
               href={whatsappLink(
                 `Hi CS Travels, I'd like to book the ${vehicle.name} (${vehicle.seats}+1). Trip details:`,

@@ -67,6 +67,39 @@
 }
 
 /**
+ * Instrument Serif — the display voice.
+ *
+ * Added because the site read as a template: one neutral grotesque at nine
+ * sizes, which is the default of every SaaS-derived layout and says nothing
+ * about a temple town. A high-contrast serif carries the gravitas and warmth a
+ * pilgrimage brand needs, and the contrast between the two faces is what makes
+ * the typography look considered rather than configured.
+ *
+ * Self-hosted, latin subset only (15KB each). One weight — display faces don't
+ * need a scale, they need presence. The italic exists for one editorial moment
+ * per page, not as general emphasis.
+ */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122,
+    U+2212, U+20B9;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/InstrumentSerif-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122,
+    U+2212, U+20B9;
+}
+
+/**
  * Metric-adjusted system fallback.
  *
  * When neither webfont has loaded, text renders in the local system grotesque

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Phone, MessageCircle, Mail, MapPin, Clock, Play } from "lucide-react";
 import { Card, CardBody } from "../ui/Card";
-import { Eyebrow } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
+import { Picture } from "../ui/Image";
+import contactImage from "../../assets/Contact_Background.png?preset=scene";
 import { cn, whatsappLink } from "../../lib/utils";
 import { company } from "../../data/company";
 
@@ -54,14 +55,31 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative overflow-hidden bg-ink-950 py-20 lg:py-28"
+      className="relative isolate overflow-hidden bg-ink-950 py-24 lg:py-32"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-ink-mesh" />
+      {/*
+        Devotees at prayer, held to the right edge.
+
+        The closing section is where a pilgrimage brand should show the reason
+        people travel rather than another gradient. Anchored right so it sits
+        behind the map column and never behind the contact details.
+      */}
+      <Picture
+        source={contactImage}
+        alt=""
+        sizes="100vw"
+        className="absolute inset-0 -z-20 h-full w-full"
+        imgClassName="object-cover object-[65%_center]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(105deg,rgba(5,13,26,0.97)_0%,rgba(5,13,26,0.90)_42%,rgba(5,13,26,0.72)_100%)]"
+      />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-ink-mesh opacity-50" />
 
       <div className="relative z-raised mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <Reveal className="max-w-2xl">
-          <Eyebrow>Get in touch</Eyebrow>
-          <h2 id="contact-heading" className="mt-5 text-h2 text-fg">
+          <h2 id="contact-heading" className="text-h2 text-fg">
             Tell us when <span className="text-gold-400">you&apos;re coming</span>
           </h2>
           <p className="mt-5 text-body-lg text-fg-secondary">

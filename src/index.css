@@ -41,8 +41,24 @@
     scroll-margin-top: 6rem;
   }
 
+  /**
+   * Two voices, split by job.
+   *
+   * h1/h2 are the display voice — Instrument Serif, one weight, near-zero
+   * tracking. A high-contrast serif is drawn with its own spacing; the -0.03em
+   * the grotesque wants collapses its thin strokes into the thick ones.
+   *
+   * h3/h4 stay on the sans. They are card titles and UI labels at 18–30px,
+   * where this serif's contrast turns to mush and a grotesque reads cleanly.
+   * That division is the point: it makes the pairing legible as a decision.
+   */
   h1,
-  h2,
+  h2 {
+    @apply font-serif font-normal text-fg;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
   h3,
   h4 {
     @apply font-medium text-fg;

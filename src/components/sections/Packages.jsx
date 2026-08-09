@@ -1,46 +1,44 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, MessageCircle } from "lucide-react";
-import { Card, CardBody } from "../ui/Card";
-import { Badge, Eyebrow } from "../ui/Badge";
+import { Badge } from "../ui/Badge";
 import { Reveal } from "../ui/Reveal";
 import { RemoteImage } from "../ui/Image";
 import { Button } from "../ui/Button";
 import { tourPackages } from "../../data/tourPackages";
-import { whatsappLink } from "../../lib/utils";
+import { cn, whatsappLink } from "../../lib/utils";
 import { inView } from "../../lib/motion";
 
 /**
- * Popular packages.
+ * Packages — an editorial spread, not a grid.
  *
- * A grid rather than a carousel, deliberately. There are three packages: a
- * carousel would render with its controls permanently disabled, hide nothing,
- * and keep content out of the initial DOM for crawlers. If the count grows past
- * four — likely, once the temple circuit in §6 is confirmed — swap the grid for
- * the <Carousel> primitive, which is already built and handles any count.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * REBUILT. Three same-size cards in a row gave three genuinely different
+ * journeys identical visual weight and cropped their photography to a thumbnail.
  *
- * This replaces the Swiper implementation; Swiper is dropped from the bundle
- * once Destinations is rebuilt too.
+ * Alternating full-width rows do the opposite: the image gets real size, the
+ * itinerary gets room to be read, and the rhythm changes as you scroll rather
+ * than repeating. Three items is exactly the count at which a grid stops being
+ * a layout decision and becomes a default.
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * Image mask wipe.
+ * Image mask wipe — a translating panel, not `clip-path`.
  *
- * The brief asks for a wipe, and the obvious way is animating `clip-path` —
- * which repaints rather than compositing. This instead slides a solid panel off
- * the image, so the whole reveal is a single `transform` on the compositor and
- * the constraint "animate transform and opacity only" holds.
+ * `clip-path` repaints; sliding a solid panel off the image is a single
+ * compositor transform, so the "transform and opacity only" rule holds.
  */
 function WipeImage({ src, alt, priority = false }) {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden rounded-xl">
       <RemoteImage
         src={src}
         alt={alt}
-        aspectRatio="4 / 3"
+        aspectRatio="3 / 2"
         priority={priority}
         className="h-full w-full"
-        imgClassName="transition-transform duration-entrance ease-entrance group-hover:scale-105"
+        imgClassName="transition-transform duration-entrance ease-entrance group-hover:scale-[1.04]"
       />
 
       <motion.span
@@ -49,14 +47,12 @@ function WipeImage({ src, alt, priority = false }) {
         initial={{ x: "0%" }}
         whileInView={{ x: "101%" }}
         viewport={inView}
-        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       />
 
-      {/* Bottom scrim so the badge and any overlaid text stay legible on
-          whatever photography eventually lands here. */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-2/5 bg-[linear-gradient(180deg,transparent,rgba(5,13,26,0.75))]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(5,13,26,0.55))]"
       />
     </div>
   );
@@ -67,71 +63,72 @@ export default function Packages() {
     <section
       id="packages"
       aria-labelledby="packages-heading"
-      className="relative overflow-hidden bg-ink-950 py-20 lg:py-28"
+      className="relative overflow-hidden bg-ink-900 py-24 lg:py-32"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-ink-mesh" />
-
       <div className="relative z-raised mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <Reveal className="max-w-2xl">
-          <Eyebrow>Curated journeys</Eyebrow>
-          <h2 id="packages-heading" className="mt-5 text-h2 text-fg">
-            Pilgrimage <span className="text-gold-400">packages</span>
+          <h2 id="packages-heading" className="text-h2 text-fg">
+            Journeys we&apos;ve{" "}
+            <span className="text-gold-300">already planned</span>
           </h2>
           <p className="mt-5 text-body-lg text-fg-secondary">
             Multi-day temple routes with the driving, timing and overnight stops
-            already worked out — so the only thing left to plan is the darshan.
+            worked out — so the only thing left to plan is the darshan.
           </p>
         </Reveal>
 
-        <Reveal.Group
-          speed="loose"
-          delayChildren={0.1}
-          className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {tourPackages.map((pkg, index) => (
-            <Reveal.Item key={pkg.slug} className="min-w-0">
-              <Card
-                variant="solid"
-                radius="xl"
-                sweep
-                className="flex h-full flex-col"
+        <div className="mt-20 space-y-24 lg:space-y-32">
+          {tourPackages.map((pkg, index) => {
+            /* Alternate which side the image sits on. The eye tracks the switch
+               and the page stops reading as a list. */
+            const flipped = index % 2 === 1;
+
+            return (
+              <article
+                key={pkg.slug}
+                className="group grid items-center gap-10 lg:grid-cols-2 lg:gap-16"
               >
-                <div className="relative">
+                <Reveal
+                  preset={flipped ? "right" : "left"}
+                  className={cn("min-w-0", flipped && "lg:order-2")}
+                >
                   <WipeImage
-                    /* Sizing params on the Unsplash URL: without them the raw
-                       full-resolution original comes over the wire. These are
-                       placeholders pending real photography — §8. */
-                    src={`${pkg.image}?w=800&q=70&auto=format&fit=crop`}
+                    /* Sizing params keep Unsplash from serving the full-res
+                       original. Placeholders pending real photography — §8. */
+                    src={`${pkg.image}?w=1100&q=72&auto=format&fit=crop`}
                     alt={`${pkg.title} — ${pkg.subtitle}`}
                     priority={index === 0}
                   />
+                </Reveal>
 
-                  <Badge
-                    variant="glass"
-                    size="sm"
-                    className="absolute left-4 top-4 z-raised"
-                  >
-                    {pkg.tag}
-                  </Badge>
-                </div>
+                <Reveal
+                  preset={flipped ? "left" : "right"}
+                  delay={0.08}
+                  className={cn("min-w-0", flipped && "lg:order-1")}
+                >
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Badge variant="gold" size="sm">
+                      {pkg.tag}
+                    </Badge>
+                    <span className="text-caption uppercase tracking-[0.18em] text-fg-muted">
+                      {pkg.subtitle}
+                    </span>
+                  </div>
 
-                <CardBody className="flex flex-1 flex-col">
-                  <p className="text-overline uppercase text-gold-400">
-                    {pkg.subtitle}
-                  </p>
+                  <h3 className="mt-5 font-serif text-[clamp(1.75rem,1.3rem+1.9vw,2.75rem)] font-normal leading-[1.1] text-fg">
+                    {pkg.title}
+                  </h3>
 
-                  <h3 className="mt-3 text-h4 text-fg">{pkg.title}</h3>
-
-                  <p className="mt-3 text-body-sm text-fg-muted">
+                  <p className="mt-5 max-w-prose text-body-lg text-fg-secondary">
                     {pkg.description}
                   </p>
 
-                  {/* Inclusions. Real list from the data — not marketing filler. */}
-                  <ul className="mt-5 space-y-2">
+                  {/* Real inclusions from the data — not marketing filler. */}
+                  <ul className="mt-7 space-y-2.5">
                     {pkg.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-start gap-2.5 text-body-sm text-fg-secondary"
+                        className="flex items-start gap-3 text-body-sm text-fg-secondary"
                       >
                         <Check
                           size={15}
@@ -143,17 +140,17 @@ export default function Packages() {
                     ))}
                   </ul>
 
-                  {/* mt-auto pins the price rail to the card bottom so all three
-                      cards align regardless of description length. */}
-                  <div className="mt-auto pt-7">
-                    <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.08] pt-5">
-                      <span className="text-overline uppercase text-fg-muted">
+                  <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-5 border-t border-white/[0.10] pt-7">
+                    <p className="flex items-baseline gap-2.5">
+                      <span className="text-caption uppercase tracking-[0.16em] text-fg-muted">
                         From
                       </span>
-                      <span className="text-h3 text-gold-400">{pkg.price}</span>
-                    </div>
+                      <span className="font-serif text-h2 text-gold-300">
+                        {pkg.price}
+                      </span>
+                    </p>
 
-                    <div className="mt-5 flex flex-col gap-2.5">
+                    <div className="flex flex-wrap gap-3">
                       <Button asChild variant="primary" size="md">
                         <a
                           href={whatsappLink(
@@ -175,28 +172,26 @@ export default function Packages() {
                       </Button>
                     </div>
                   </div>
-                </CardBody>
-              </Card>
-            </Reveal.Item>
-          ))}
-        </Reveal.Group>
+                </Reveal>
+              </article>
+            );
+          })}
+        </div>
 
         {/*
-          TODO(CONTENT-BRIEF.md §5, §6): the brief lists Tirumala darshan, local
-          sightseeing and outstation as headline packages. Only these three exist
-          in the data, and the 9-temple circuit in §6 is still awaiting a
-          keep/price decision before it can be added here.
+          TODO(CONTENT-BRIEF.md §5, §6): the 9-temple circuit still needs a
+          keep/price decision before it can join this list.
         */}
-        <Reveal delay={0.15} className="mt-12">
+        <Reveal delay={0.1} className="mt-20">
           <p className="text-body-sm text-fg-muted">
-            Need a route that isn&apos;t listed?{" "}
+            Need a route that isn&apos;t here?{" "}
             <a
               href={whatsappLink(
                 "Hi CS Travels, I'd like a custom tour package. Here's what I have in mind:",
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gold-400 underline-offset-4 transition-colors duration-micro ease-state hover:text-gold-300 hover:underline"
+              className="text-gold-300 underline-offset-4 transition-colors duration-micro ease-state hover:text-gold-200 hover:underline"
             >
               Tell us where you want to go
             </a>{" "}
