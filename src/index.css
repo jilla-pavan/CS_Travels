@@ -1,135 +1,258 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+@import "./styles/fonts.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --gold: #D4AF37;
-  --black: #050505;
-  --white: #ffffff;
-}
+@layer base {
+  :root {
+    /* Runtime-readable tokens. JS reads these where it needs a computed value
+       rather than a Tailwind class (the custom cursor, GSAP timelines). */
+    --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-state: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration-micro: 200ms;
+    --duration-standard: 400ms;
+    --duration-entrance: 700ms;
+    --duration-cinematic: 1200ms;
 
-* {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: var(--black);
-  color: var(--white);
-  font-family: "Poppins", sans-serif;
-  overflow-x: hidden;
-}
-
-.ornament-line {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
-}
-
-.card-glow:hover {
-  box-shadow:
-    0 0 30px rgba(212, 175, 55, 0.2),
-    0 8px 40px rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px);
-  transition: all 0.3s ease;
-}
-
-.hero-bg {
-  background:
-    radial-gradient(
-      ellipse at top left,
-      rgba(212, 175, 55, 0.16) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at bottom right,
-      rgba(255, 255, 255, 0.08) 0%,
-      transparent 50%
-    ),
-    linear-gradient(180deg, var(--black) 0%, var(--black) 100%);
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #06070f;
-}
-::-webkit-scrollbar-thumb {
-  background: #D4AF37;
-  border-radius: 3px;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 0% 50%;
+    /* Set to 1 by the reduced-motion provider. Guards CSS that JS doesn't own. */
+    --motion-ok: 1;
   }
-  50% {
-    background-position: 100% 50%;
+
+  html {
+    /* Deliberately NOT `scroll-behavior: smooth`. Lenis owns scrolling, and the
+       two fight each other — native smooth scroll hijacks Lenis's rAF loop and
+       produces a stutter on every anchor jump. See providers/SmoothScroll.jsx. */
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
   }
-  100% {
-    background-position: 0% 50%;
+
+  body {
+    @apply bg-ink-950 font-sans text-body text-fg-secondary antialiased;
+    margin: 0;
+    overflow-x: hidden;
+    /* Opsz/kerning niceties that cost nothing and read as craft at display sizes. */
+    font-kerning: normal;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Anchor targets clear the fixed nav instead of hiding underneath it. */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-medium text-fg;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /**
+   * One focus style for the whole site. `:focus-visible` rather than `:focus`
+   * so pointer users never see it, keyboard users always do. This is the
+   * accessibility floor — no component is permitted to remove it.
+   */
+  :focus-visible {
+    outline: 2px solid theme("colors.gold.500");
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: theme("colors.gold.500");
+    color: theme("colors.ink.950");
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme("colors.ink.950");
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme("colors.ink.600");
+    border-radius: 9999px;
+    border: 3px solid theme("colors.ink.950");
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme("colors.gold.700");
+  }
+
+  /* Images never overflow, and never contribute layout shift while loading. */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
   }
 }
 
-.packageSwiper {
-  overflow: visible;
+@layer components {
+  /**
+   * Film grain. A single inlined SVG turbulence, tiled — no image request, no
+   * decode cost, and it survives compression better than a noise PNG.
+   * Sits at 3% and is `pointer-events: none`, so it never intercepts clicks.
+   */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /** Glass panel. Used in 3–4 places total, never as a default surface. */
+  .glass {
+    background: rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  /* Backdrop-filter is expensive and janks mid-range Android on scroll.
+     Below the md breakpoint the glass degrades to a flat tint. */
+  @media (max-width: 767px) {
+    .glass {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(11, 31, 58, 0.82);
+    }
+  }
+
+  .hairline {
+    height: 1px;
+    background: theme("backgroundImage.gold-hairline");
+  }
+
+  /**
+   * Gold border sweep.
+   *
+   * Written as real CSS rather than Tailwind arbitrary values, because the
+   * arbitrary-value version silently produced the wrong thing: the commas in
+   * `[mask:a,b]` dropped the `content-box` keyword, and `[mask-composite:xor]`
+   * emitted `xor` for the STANDARD property — which only accepts
+   * `add | subtract | intersect | exclude`. `xor` is the -webkit- spelling.
+   *
+   * The result computed to `mask-composite: add, add`, i.e. no mask at all, so
+   * the gradient filled the entire card instead of tracing a 1px border. It
+   * looked like a gold blob smeared across the card on hover.
+   *
+   * The two-layer mask + exclude is what confines the paint to the padding
+   * ring: layer one covers the content box, layer two the border box, and
+   * excluding one from the other leaves only the 1px frame.
+   */
+  .border-sweep::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    opacity: 0;
+    background-image: theme("backgroundImage.gold-sweep");
+    background-size: 250% 100%;
+    background-position: 120% 0;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    transition:
+      opacity var(--duration-standard) var(--ease-state),
+      background-position var(--duration-cinematic) var(--ease-entrance);
+  }
+
+  .group:hover .border-sweep::before,
+  .group:focus-within .border-sweep::before {
+    opacity: 1;
+    background-position: -20% 0;
+  }
+
+  /**
+   * Testimonial marquee.
+   *
+   * Was previously a `<style jsx>` block inside Reviews.jsx — a Next.js
+   * styled-jsx feature that isn't installed here, so React was writing an
+   * invalid `jsx` attribute to the DOM (two console errors per render) and
+   * injecting the CSS globally and unscoped anyway.
+   *
+   * Pauses on hover AND on focus-within, so a keyboard user tabbing through the
+   * review cards doesn't have the content slide out from under them.
+   */
+  .marquee-track {
+    width: max-content;
+    /* Duration comes from the component so it can scale with content length —
+       more items make the loop longer, not faster. */
+    animation: marquee var(--marquee-duration, 45s) linear infinite;
+  }
+
+  .marquee-track:hover,
+  .marquee-track:focus-within {
+    animation-play-state: paused;
+  }
 }
 
-.packageSwiper .swiper-slide {
-  height: auto;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.packageSwiper .swiper-button-prev,
-.packageSwiper .swiper-button-next {
-  width: 54px;
-  height: 54px;
-  border-radius: 9999px;
-  background: rgba(212, 175, 55, 0.08);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  backdrop-filter: blur(12px);
-  transition: all 0.3s ease;
+/* An infinite horizontal crawl is exactly the peripheral motion the preference
+   exists to stop. Halted entirely, not merely slowed. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    /* Without the animation the track is a max-content row; let it scroll. */
+    width: 100%;
+    overflow-x: auto;
+  }
 }
 
-.packageSwiper .swiper-button-prev:hover,
-.packageSwiper .swiper-button-next:hover {
-  background: rgba(212, 175, 55, 0.15);
-  transform: scale(1.08);
-}
+/**
+ * ───────────────────────────────────────────────────────────────────────────
+ * Reduced motion.
+ *
+ * This is a hard gate, not a nicety. Everything transform-based stops; opacity
+ * fades survive because they carry meaning without vestibular cost.
+ *
+ * JS-driven motion (Lenis, GSAP, Framer, the custom cursor, R3F scenes) is
+ * disabled separately at the source in providers/SmoothScroll.jsx and
+ * hooks/usePrefersReducedMotion.js — CSS alone cannot stop a rAF loop.
+ * ───────────────────────────────────────────────────────────────────────────
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-ok: 0;
+  }
 
-.packageSwiper .swiper-button-prev::after,
-.packageSwiper .swiper-button-next::after {
-  font-size: 16px;
-  font-weight: 700;
-  color: #d4af37;
-}
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 
-.packageSwiper .swiper-pagination {
-  bottom: 0 !important;
-}
-
-.packageSwiper .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.25);
-  opacity: 1;
-}
-
-.packageSwiper .swiper-pagination-bullet-active {
-  width: 28px;
-  border-radius: 9999px;
-  background: #d4af37;
-  transition: all 0.3s ease;
-}
-
-@media (max-width: 768px) {
-  .packageSwiper .swiper-button-prev,
-  .packageSwiper .swiper-button-next {
-    display: none;
+  /* Opacity transitions are the one exception — they stay, at a calm speed. */
+  .motion-safe-fade,
+  .motion-safe-fade * {
+    transition-property: opacity !important;
+    transition-duration: 300ms !important;
   }
 }

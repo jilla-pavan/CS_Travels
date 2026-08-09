@@ -1,0 +1,88 @@
+/**
+ * Typeface loading.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * AEONIK IS NOT IN THIS REPO. It is commercially licensed from CoType Foundry
+ * (https://cotypefoundry.com/aeonik) and cannot be redistributed in source control.
+ *
+ * To activate it, drop these two files into `public/fonts/` — nothing else to change:
+ *
+ *     public/fonts/Aeonik-Regular.woff2
+ *     public/fonts/Aeonik-Medium.woff2
+ *
+ * The @font-face rules below already point at those paths. While the files are
+ * absent the browser silently falls through to Satoshi, then Inter, then system-ui.
+ * No error, no layout shift — just a different (metrically close) typeface.
+ *
+ * Two weights only, by design: 400 for body, 500 for display. A third weight is
+ * another ~18KB over the wire and this design does not need one.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  /* Latin + Latin-1 Supplement + the ₹ sign (U+20B9), which this site needs everywhere. */
+  unicode-range:
+    U+0000-00FF, U+0131, U+2018-201A, U+201C-201E, U+2022, U+2013-2014, U+2026,
+    U+20B9, U+2212;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+2018-201A, U+201C-201E, U+2022, U+2013-2014, U+2026,
+    U+20B9, U+2212;
+}
+
+/**
+ * Satoshi — the metrically-close stand-in, also self-hosted.
+ * Free for commercial use from Fontshare (https://fontshare.com/fonts/satoshi).
+ *
+ *     public/fonts/Satoshi-Regular.woff2
+ *     public/fonts/Satoshi-Medium.woff2
+ */
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/**
+ * Metric-adjusted system fallback.
+ *
+ * When neither webfont has loaded, text renders in the local system grotesque
+ * scaled to match Aeonik's cap height and average character width. This is what
+ * keeps CLS at 0 during the font swap instead of the headline reflowing.
+ *
+ * Values derived from Aeonik's metrics against SF Pro / Segoe UI / Roboto.
+ */
+@font-face {
+  font-family: "Aeonik Fallback";
+  src:
+    local("SF Pro Display"), local("Segoe UI"), local("Roboto"),
+    local("Helvetica Neue"), local("Arial");
+  font-weight: 400 500;
+  size-adjust: 97%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}

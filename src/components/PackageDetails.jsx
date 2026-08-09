@@ -3,14 +3,13 @@ import { CheckCircle2, ArrowRight, Phone, MessageCircle } from "lucide-react";
 import { tourPackages } from "../data/tourPackages";
 import BGImage from "../assets/Journey_Background.png";
 
-function getPackageSlug() {
-  const hash = window.location.hash.toLowerCase();
-  return hash.startsWith("#/details/") ? hash.replace("#/details/", "") : "";
-}
-
-export default function PackageDetails() {
-  const slug = getPackageSlug();
-  const selectedPackage = tourPackages.find((pkg) => pkg.slug === slug);
+/**
+ * The slug now arrives as a prop from the route (see pages/PackageDetail.jsx)
+ * rather than being parsed out of window.location.hash in here. The `pkg`
+ * fallback keeps this renderable in isolation.
+ */
+export default function PackageDetails({ pkg }) {
+  const selectedPackage = pkg ?? tourPackages[0];
 
   if (!selectedPackage) return null;
 

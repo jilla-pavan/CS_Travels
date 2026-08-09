@@ -1,62 +1,40 @@
-import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Package from "./components/Package";
-import PackageDetails from "./components/PackageDetails";
-import Itinerary from "./components/Itinerary";
-import Highlights from "./components/Highlights";
-import Contact from "./components/Contact";
-import { Dessert } from "lucide-react";
-import Destinations from "./components/Destinations";
-import About from "./components/About";
-import Reviews from "./components/Reviews";
-import Footer from "./components/Footer";
-import FloatingActions from "./components/FloatActions";
+import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Navbar } from "./components/layout/Navbar";
+import { MobileActionBar } from "./components/layout/MobileActionBar";
+import Footer from "./components/layout/Footer";
+import { TooltipProvider } from "./components/ui/Tooltip";
 
-function parseHashRoute() {
-  const hash = window.location.hash.toLowerCase();
-  if (hash.startsWith("#/details/")) {
-    return { page: "details", slug: hash.replace("#/details/", "") };
-  }
-  return { page: "home" };
-}
-
+/**
+ * Root layout.
+ *
+ * Nav, footer and floating actions are shared across every route, so they live
+ * here rather than being repeated per page (the old build rendered them twice,
+ * once in each branch of a ternary).
+ */
 export default function App() {
-  const [route, setRoute] = useState({ page: "home" });
-
-  useEffect(() => {
-    setRoute(parseHashRoute());
-
-    const handleHashChange = () => {
-      setRoute(parseHashRoute());
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-black text-white">
+    <TooltipProvider delayDuration={200} skipDelayDuration={400}>
+      {/* Skip link. First thing in the tab order, visible only on focus —
+          without it, keyboard users traverse the entire nav on every page. */}
+      <a
+        href="#main"
+        className="sr-only rounded-full bg-gold-500 px-5 py-3 text-caption font-medium uppercase tracking-[0.14em] text-ink-950 focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-loader"
+      >
+        Skip to content
+      </a>
+
       <Navbar />
-      {route.page === "details" ? (
-        <>
-          {" "}
-          <PackageDetails />
-          <Footer />
-          <FloatingActions />
-        </>
-      ) : (
-        <>
-          <Hero />
-          <Package />
-          <Destinations />
-          <Reviews />
-          <About />
-          <Contact />
-          <Footer />
-          <FloatingActions />
-        </>
-      )}
-    </div>
+
+      <main id="main" tabIndex={-1} className="focus:outline-none">
+        <Outlet />
+      </main>
+
+      <Footer />
+      <MobileActionBar />
+
+      {/* Restores scroll position on back/forward and resets it to the top on
+          forward navigation. The old hash router did neither. */}
+      <ScrollRestoration />
+    </TooltipProvider>
   );
 }

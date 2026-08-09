@@ -1,0 +1,13 @@
+# CS Travels Tirupati
+#
+# TODO(CONTENT-BRIEF.md §12): add the Sitemap line once a domain is confirmed.
+# A sitemap URL pointing at the wrong host is worse than none at all, so it is
+# deliberately absent rather than guessed:
+#
+#   Sitemap: https://your-domain.com/sitemap.xml
+
+User-agent: *
+Allow: /
+
+# Nothing here is private, but there is no value in crawling the build output.
+Disallow: /assets/
